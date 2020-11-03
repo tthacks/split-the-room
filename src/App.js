@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import MessageTab from './Components/MessageTab';
+import FinanceTab from './Components/FinanceTab';
+import ChoresTab from './Components/ChoresTab';
+import TabHeader from './Components/TabHeader';
 
 function App() {
+
+  const houseName = "Hokie Haus";
+  //const currentlyActive = 0; //0 is messages, 1 is finances, 2 is chores
+  const [currentlyActive, setActive] = useState(0);
+
+  function currentTab() {
+    switch(currentlyActive) {
+      case 0:
+        return <MessageTab />;
+      case 1:
+        return <FinanceTab />;
+      case 2:
+      default: 
+        return <ChoresTab />;
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+    <h1 style={{color:"#eb5757", fontSize: 64, paddingLeft: 15}}>{houseName}</h1>
+    <div style={{paddingLeft: 30}}>
+      <TabHeader active={currentlyActive} />
+      {currentTab()}
+    </div>
     </div>
   );
 }
