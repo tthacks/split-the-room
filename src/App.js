@@ -3,12 +3,15 @@ import MessageTab from './Components/MessageTab';
 import FinanceTab from './Components/FinanceTab';
 import ChoresTab from './Components/ChoresTab';
 import TabHeader from './Components/TabHeader';
+import SplashScreen from './Components/SplashScreen';
+import * as colors from './colors';
 
 function App() {
 
   const houseName = "Hokie Haus";
   //const currentlyActive = 0; //0 is messages, 1 is finances, 2 is chores
   const [currentlyActive, setActive] = useState(0);
+  const [isSignedIn, signIn] = useState(false);
 
   function currentTab() {
     switch(currentlyActive) {
@@ -23,12 +26,16 @@ function App() {
   }
 
   return (
+    <div className="App">
+      {!isSignedIn && <SplashScreen allowAccess={signIn}/>}
+      {isSignedIn && <div>
+    <h1 style={{color: colors.light3}}>{houseName}</h1>
     <div>
-    <h1 style={{color:"#eb5757", fontSize: 64, paddingLeft: 15}}>{houseName}</h1>
-    <div style={{paddingLeft: 30}}>
-      <TabHeader active={currentlyActive} />
+      <TabHeader active={currentlyActive} setActive={setActive}/>
       {currentTab()}
     </div>
+    </div>
+    }
     </div>
   );
 }

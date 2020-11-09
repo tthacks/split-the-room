@@ -1,4 +1,5 @@
 import React from 'react';
+import * as colors from '../colors';
 
 function BottomBar(props) {
 
@@ -7,9 +8,9 @@ function BottomBar(props) {
     }
 
     return(
-        <div style={{backgroundColor:"#828282", padding: 5}}>
-            <div onClick={openDialogue} style={{backgroundColor: "#6fcf97", width: "20%", textAlign: "center", marginLeft: "40%"}}>
-                <p style={{color: "#ffffff", padding: 5}}>{props.buttonText} </p>
+        <div style={{backgroundColor:colors.dark2, padding: 5}}>
+            <div onClick={openDialogue} style={{backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
+                <p style={{color: colors.light3, padding: 5}}>{props.buttonText} </p>
             </div>
         </div>
     );

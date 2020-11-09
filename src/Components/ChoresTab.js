@@ -1,9 +1,10 @@
 import React from 'react';
+import * as colors from "../colors"
 
 function ChoresTab(props) {
 
     const pageStyle = {
-        backgroundColor: "#c4c4c4",
+        backgroundColor: colors.light2,
         padding: 16,
         marginLeft: 50,
         marginRight: 50
