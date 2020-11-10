@@ -8,7 +8,7 @@ function MessageTab(props) {
 
     const [messages, setMessages] = useState([]);
 
-    useEffect(fetchMessages);
+    useEffect(fetchMessages, [props.refreshCounter]);
 
     const pageStyle = {
         backgroundColor: colors.light1,
@@ -24,10 +24,8 @@ function MessageTab(props) {
             console.log("fail");
         } 
         else {
-        setMessages(obj.data.map(function (task) {
-                      return (
-              <Message key={task._id} _id={task._id} msg={task.msg} important={task.important}/>
-            )
+        setMessages(obj.data.map(function (m) {
+                      return (<Message key={m._id} _id={m._id} author={m.author} msg={m.msg} important={m.important} deleted={false}/>)
         }));
     }
       })
@@ -36,22 +34,12 @@ function MessageTab(props) {
       });
     }
 
-//     const text = [{user: "0", msg: "Look at this cool rock I found", important: false}, 
-//     {user: "2", msg: "WE NEED MORE TOILET PAPER ASAP", important: true},
-//     {user: "0", msg: "I'm gonna go look for some cool rocks", important: false}
-// ];
-    
-    // //turn the messages into Message Components
-    // const message_list = messages.map(function(f) {
-    //     return <Message key={text.indexOf(f)} important={f.important} msg={f.msg} />
-    // });
-
     return(
         <div style={pageStyle}>
     <div style={{padding: 16}}>
             {messages}
         </div>
-        <BottomBar buttonText="NEW POST"/>
+        <BottomBar buttonText="NEW POST" refreshMessages={props.triggerRefresh}/>
         </div>
     );
 }

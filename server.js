@@ -1,4 +1,3 @@
-const {ObjectId} = require('mongodb');
 const express = require("express");
 const bodyParser   = require('body-parser');
 const app = express();
@@ -34,18 +33,18 @@ let insertDocument = function(db, collectionName, data, callback) {
   });
 };
 
-let updateOneDocument = function(db, collectionName, query, newvalues, callback) {
-  if(VERBOSE)console.log("updateOneDocument: query:" + JSON.stringify(query));
-  if(VERBOSE)console.log("updateOneDocument: newValue:" + JSON.stringify(newvalues));
-  db.collection(collectionName).updateOne(query,{ $set: newvalues }, function(err, res) {
-    if (err) {
-      throw err;
-    }
-    if(VERBOSE)console.log("updateOneDocument: Updated a document in "+collectionName+" collection. ");
+// let updateOneDocument = function(db, collectionName, query, newvalues, callback) {
+//   if(VERBOSE)console.log("updateOneDocument: query:" + JSON.stringify(query));
+//   if(VERBOSE)console.log("updateOneDocument: newValue:" + JSON.stringify(newvalues));
+//   db.collection(collectionName).updateOne(query,{ $set: newvalues }, function(err, res) {
+//     if (err) {
+//       throw err;
+//     }
+//     if(VERBOSE)console.log("updateOneDocument: Updated a document in "+collectionName+" collection. ");
 
-    if(callback)callback();
-  });
-};
+//     if(callback)callback();
+//   });
+// };
 
 //https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 let writeOKResponse = function(res, message, data){
@@ -66,23 +65,29 @@ let writeBadRequestResponse = function(res, message){
   res.end(message);
 }
 
-let retreiveAllDocsList = function(db, query, fields,sort ){
+let retreiveAllMessagesList = function(db ){
+  let cursor;
   try {
-    cursor = db.collection('tasks').find(query).sort(sort).project(fields);
+    cursor = db.collection('messages').find({});
   } catch (err) {
-    if(VERBOSE)console.log("retreiveAllDocsList: retreiveAllDocsList Error\n" + err);
+    if(VERBOSE)console.log("retreiveAllMessagesList: retreiveAllMessagesList Error\n" + err);
+  }
+  return cursor;
+};
+
+let retreiveAllChoresList = function(db ){
+  let cursor;
+  try {
+    cursor = db.collection('chores').find({});
+  } catch (err) {
+    if(VERBOSE)console.log("retreiveAllChoresList: retreiveAllChoresList Error\n" + err);
   }
   return cursor;
 };
 
 app.get('/fetchmessages', function (req, res) {
   if(VERBOSE)console.log("/fetchmessages request");
-  let list = retreiveAllDocsList(
-    dbo
-    , {deleted:false}
-    , { _id: 1, title: 1 , completed:1, completeDate: 1, dueDate:1 }
-    , {createdDate: 1}
-  );
+  let list = retreiveAllMessagesList(dbo);
   list.toArray(function(err, docs){
     if(err){
       writeBadRequestResponse(res, "fetchmessages: Error in fetching data: " + err);
@@ -93,52 +98,70 @@ app.get('/fetchmessages', function (req, res) {
   });
 });
 
-
-app.post('/deletemessage', function (req, res) {
-  if(VERBOSE)console.log("/deletemessage request");
-
-  let task_id = req.body._id;
-  if(task_id == null){
-    writeBadRequestResponse(res, "deletemessage: task _id not defined." + req.body);
-    return;
-  }
-
-  if(task_id.length<12){
-    writeBadRequestResponse(res, "deletemessage: _id must be  must be a single String of 12 bytes or a string of 24 hex characters." + req.body);
-    return;
-  }
-
-  updateOneDocument(dbo, "messages",   {_id:ObjectId(task_id)}, {deleted:true}, function(err){
-    if(err){
-      writeBadRequestResponse(res, "deletemessages: Delete Document Failed" + err);
-      return;
+app.get('/fetchchores', function(req, res) {
+  if(VERBOSE)console.log("/fetchchores requirest");
+  let list = retreiveAllChoresList(dbo);
+  list.toArray(function(err, docs) {
+    if(err) {
+      writeBadRequestResponse(res, "fetchchores: Error in fetching data: " + err);
     }
-    writeOKResponse(res, "deletemessages: Task deleted Successfully", {_id: task_id});
-  });
-});
+    else {
+      writeOKResponse(res, "fetchchores: Successfully Fetched Chore Data ", docs);
+    }
+  })
+})
+
+
+// app.post('/deletemessage', function (req, res) {
+//   if(VERBOSE)console.log("/deletemessage request");
+
+//   let task_id = req.body._id;
+//   if(task_id == null){
+//     writeBadRequestResponse(res, "deletemessage: task _id not defined." + req.body);
+//     return;
+//   }
+
+//   if(task_id.length<12){
+//     writeBadRequestResponse(res, "deletemessage: _id must be  must be a single String of 12 bytes or a string of 24 hex characters." + req.body);
+//     return;
+//   }
+
+//   updateOneDocument(dbo, "messages",   {_id:ObjectId(task_id)}, {deleted:true}, function(err){
+//     if(err){
+//       writeBadRequestResponse(res, "deletemessages: Delete Document Failed" + err);
+//       return;
+//     }
+//     writeOKResponse(res, "deletemessages: Task deleted Successfully", {_id: task_id});
+//   });
+// });
 
 app.post('/newmessage', function (req, res) {
   let message = req.body;
 
-  if(typeof(message.author)!="string"){
-    writeBadRequestResponse(res, "newmessage: No title is defined.");
-    return;
-  }
-
-  if(message.content.trim().length===0){
-    writeBadRequestResponse(res, "newmessage: Task needs some content.");
-    return;
-  }
-
-  // default data.
-  message.important = false;
+  // if(typeof(message.author)!="string"){
+  //   writeBadRequestResponse(res, "newmessage: No title is defined.");
+  //   return;
+  // }
 
   insertDocument(dbo, "messages", message, function(data){
     writeOKResponse(res, "newmessage: Created Successfully", {_id: data._id});
   });
 });
 
-let server = app.listen(8080, function(){
+app.post('/newchore', function (req, res) {
+  let chore = req.body;
+
+  // if(typeof(message.author)!="string"){
+  //   writeBadRequestResponse(res, "newmessage: No title is defined.");
+  //   return;
+  // }
+
+  insertDocument(dbo, "chores", chore, function(data){
+    writeOKResponse(res, "newmessage: Created Successfully", {_id: data._id});
+  });
+});
+
+let server = app.listen(3000, function(){
     let port = server.address().port;
     if(VERBOSE)console.log("Hello! Server started at http://localhost:%s", port);
 });

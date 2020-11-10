@@ -10,19 +10,12 @@ function App() {
 
   const houseName = "Hokie Haus";
   //const currentlyActive = 0; //0 is messages, 1 is finances, 2 is chores
+  const [refresh, triggerRefresh] = useState(0);
   const [currentlyActive, setActive] = useState(0);
   const [isSignedIn, signIn] = useState(false);
 
-  function currentTab() {
-    switch(currentlyActive) {
-      case 0:
-        return <MessageTab />;
-      case 1:
-        return <FinanceTab />;
-      case 2:
-      default: 
-        return <ChoresTab />;
-    }
+  function refreshView() {
+    triggerRefresh(refresh + 1);
   }
 
   return (
@@ -32,7 +25,10 @@ function App() {
     <h1 style={{color: colors.light3}}>{houseName}</h1>
     <div>
       <TabHeader active={currentlyActive} setActive={setActive}/>
-      {currentTab()}
+      {currentlyActive === 0 && <MessageTab triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 1 && <FinanceTab triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 2 && <ChoresTab triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      
     </div>
     </div>
     }

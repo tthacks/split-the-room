@@ -1,10 +1,19 @@
 import React from 'react';
+import $ from 'jquery';
 import * as colors from '../colors';
 
 function BottomBar(props) {
 
     function openDialogue() {
+        let newMessage = {
+            author: "admin",
+            msg: "This is a test message. Please disregard.",
+            important: false
+        };
+        $.post('/newmessage', newMessage, function() {
         alert("opening dialogue");
+        props.refreshMessages();
+        });
     }
 
     return(
