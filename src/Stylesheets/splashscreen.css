@@ -1,0 +1,38 @@
+.splashscreen {
+    text-align: center;
+    background-color: #2e3440;
+    height: 100vh;
+    width: 100vw;
+}
+
+.splashscreen img {
+    margin-top: 75px;
+}
+
+.splashscreen h1 {
+    color: #8FBCBB;
+    padding-top: 20px;
+}
+
+.splashscreen input {
+    border-color: #bf616a;
+    border-style: solid;
+}
+
+.splashscreen .text-group {
+    margin-bottom: 20px;
+    color: #eceff4;
+}
+
+.splashscreen button {
+    background-color: #5E81AC; /* Green */
+    border-color: #81A1C1;
+    border-width: 2px;
+    border-style: solid;
+    color: #eceff4;
+    padding: 5px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
