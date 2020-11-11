@@ -1,9 +1,9 @@
 import React from 'react';
+import * as colors from '../colors'
 
 function Message(props) {
 
-    const bgColor = props.important ? '#eb5757' :'#f2f2f2';
-
+    const bgColor = props.important === "true" ? colors.orange : colors.light3;
     const textStyle = {
         padding: 12
     }

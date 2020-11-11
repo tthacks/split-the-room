@@ -161,7 +161,7 @@ app.post('/newchore', function (req, res) {
   });
 });
 
-let server = app.listen(3000, function(){
+let server = app.listen(8080, function(){
     let port = server.address().port;
     if(VERBOSE)console.log("Hello! Server started at http://localhost:%s", port);
 });

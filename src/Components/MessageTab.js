@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Message from './Message';
-import BottomBar from './BottomBar';
 import $ from 'jquery';
 import * as colors from '../colors';
+import NewMessageModal from './NewMessageModal';
 
 function MessageTab(props) {
 
     const [messages, setMessages] = useState([]);
+    const [modalVisible, toggleVisiblity] = useState(false);
 
     useEffect(fetchMessages, [props.refreshCounter]);
 
@@ -16,6 +17,10 @@ function MessageTab(props) {
         marginRight: 50
     };
 
+    function showModal() {
+      toggleVisiblity(!modalVisible);
+    }
+
     function fetchMessages() {
         $.get('/fetchmessages')
       .done(function (obj) {
@@ -24,8 +29,9 @@ function MessageTab(props) {
             console.log("fail");
         } 
         else {
-        setMessages(obj.data.map(function (m) {
-                      return (<Message key={m._id} _id={m._id} author={m.author} msg={m.msg} important={m.important} deleted={false}/>)
+          const d = obj.data.reverse();
+        setMessages(d.map(function (m) {
+                      return (<Message key={m._id} _id={m._id} author={m.author} msg={m.msg} important={m.important}/>)
         }));
     }
       })
@@ -36,10 +42,15 @@ function MessageTab(props) {
 
     return(
         <div style={pageStyle}>
-    <div style={{padding: 16}}>
+          <div style={{padding: 16}}>
             {messages}
+          </div>
+        <div style={{backgroundColor:colors.dark2, padding: 5}}>
+            <div onClick={showModal} style={{backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
+                <p style={{color: colors.light3, padding: 5}}>NEW POST</p>
+            </div>
         </div>
-        <BottomBar buttonText="NEW POST" refreshMessages={props.triggerRefresh}/>
+        <NewMessageModal showModal={modalVisible} dismissModal={showModal} refreshMessages={props.triggerRefresh}/>
         </div>
     );
 }
