@@ -8,12 +8,12 @@ import * as colors from './colors';
 
 function App() {
 
-  const houseName = "Hokie Haus";
   //const currentlyActive = 0; //0 is messages, 1 is finances, 2 is chores
   const [refresh, triggerRefresh] = useState(0);
   const [currentlyActive, setActive] = useState(0);
   const [isSignedIn, signIn] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
+  const [houseName, setHouseName] = useState("The Hokie Haus");
 
   function refreshView() {
     triggerRefresh(refresh + 1);
@@ -24,7 +24,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div>
       {!isSignedIn && <SplashScreen allowAccess={signIn} setUser={logInUser}/>}
       {isSignedIn && <div>
     <h1 style={{color: colors.light3}}>{houseName}</h1>
