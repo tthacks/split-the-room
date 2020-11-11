@@ -33,6 +33,13 @@ let insertDocument = function(db, collectionName, data, callback) {
   });
 };
 
+let deleteAllDocuments = function(db, collectionName, callback) {
+  db.collection(collectionName).deleteMany({}, function(err, result) {
+    if(VERBOSE)console.log("deleteAllDocuments: deleted all documents from "+collectionName);
+    if(callback)callback();
+  })
+}
+
 // let updateOneDocument = function(db, collectionName, query, newvalues, callback) {
 //   if(VERBOSE)console.log("updateOneDocument: query:" + JSON.stringify(query));
 //   if(VERBOSE)console.log("updateOneDocument: newValue:" + JSON.stringify(newvalues));
@@ -112,28 +119,17 @@ app.get('/fetchchores', function(req, res) {
 })
 
 
-// app.post('/deletemessage', function (req, res) {
-//   if(VERBOSE)console.log("/deletemessage request");
+app.post('/deleteallmessages', function (req, res) {
+  if(VERBOSE)console.log("/deleteallmessages request");
 
-//   let task_id = req.body._id;
-//   if(task_id == null){
-//     writeBadRequestResponse(res, "deletemessage: task _id not defined." + req.body);
-//     return;
-//   }
-
-//   if(task_id.length<12){
-//     writeBadRequestResponse(res, "deletemessage: _id must be  must be a single String of 12 bytes or a string of 24 hex characters." + req.body);
-//     return;
-//   }
-
-//   updateOneDocument(dbo, "messages",   {_id:ObjectId(task_id)}, {deleted:true}, function(err){
-//     if(err){
-//       writeBadRequestResponse(res, "deletemessages: Delete Document Failed" + err);
-//       return;
-//     }
-//     writeOKResponse(res, "deletemessages: Task deleted Successfully", {_id: task_id});
-//   });
-// });
+  deleteAllDocuments(dbo, "messages", function(err){
+    if(err){
+      writeBadRequestResponse(res, "deletemessages: Delete Document Failed" + err);
+      return;
+    }
+    writeOKResponse(res, "deletemessages: Task deleted Successfully");
+  });
+});
 
 app.post('/newmessage', function (req, res) {
   let message = req.body;
@@ -161,7 +157,7 @@ app.post('/newchore', function (req, res) {
   });
 });
 
-let server = app.listen(3000, function(){
+let server = app.listen(8080, function(){
     let port = server.address().port;
     if(VERBOSE)console.log("Hello! Server started at http://localhost:%s", port);
 });
