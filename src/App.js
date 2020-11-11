@@ -13,20 +13,25 @@ function App() {
   const [refresh, triggerRefresh] = useState(0);
   const [currentlyActive, setActive] = useState(0);
   const [isSignedIn, signIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState("");
 
   function refreshView() {
     triggerRefresh(refresh + 1);
   }
 
+  function logInUser(username) {
+    setCurrentUser(username);
+  }
+
   return (
     <div className="App">
-      {!isSignedIn && <SplashScreen allowAccess={signIn}/>}
+      {!isSignedIn && <SplashScreen allowAccess={signIn} setUser={logInUser}/>}
       {isSignedIn && <div>
     <h1 style={{color: colors.light3}}>{houseName}</h1>
     <div>
       <TabHeader active={currentlyActive} setActive={setActive}/>
-      {currentlyActive === 0 && <MessageTab triggerRefresh={refreshView} refreshCounter={refresh}/>}
-      {currentlyActive === 1 && <FinanceTab triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 0 && <MessageTab user={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 1 && <FinanceTab user = {currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
       {currentlyActive === 2 && <ChoresTab triggerRefresh={refreshView} refreshCounter={refresh}/>}
       
     </div>

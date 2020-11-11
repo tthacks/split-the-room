@@ -3,11 +3,11 @@ import Message from './Message';
 import $ from 'jquery';
 import * as colors from '../colors';
 import NewMessageModal from './NewMessageModal';
-
 function MessageTab(props) {
 
     const [messages, setMessages] = useState([]);
     const [modalVisible, toggleVisiblity] = useState(false);
+    const debugMode = false;
 
     useEffect(fetchMessages, [props.refreshCounter]);
 
@@ -19,6 +19,19 @@ function MessageTab(props) {
 
     function showModal() {
       toggleVisiblity(!modalVisible);
+    }
+
+    function renderEmpty() {
+      if(messages.length === 0) {
+        return <Message key={0} id={0} msg={"There are no messages right now. Say something to get the conversation started!"} important={false}/>;
+      }
+    }
+
+    function deleteAll() {
+      $.post('/deleteallmessages')
+      .done(function(obj) {
+        fetchMessages();
+      })
     }
 
     function fetchMessages() {
@@ -42,7 +55,10 @@ function MessageTab(props) {
 
     return(
         <div style={pageStyle}>
-          <div style={{padding: 16}}>
+          {debugMode &&
+          <button onClick={deleteAll}>Delete all</button>}
+          <div style={{padding: 16, height: 400, overflowY: "scroll"}}>
+            {renderEmpty()}
             {messages}
           </div>
         <div style={{backgroundColor:colors.dark2, padding: 5}}>
@@ -50,7 +66,7 @@ function MessageTab(props) {
                 <p style={{color: colors.light3, padding: 5}}>NEW POST</p>
             </div>
         </div>
-        <NewMessageModal showModal={modalVisible} dismissModal={showModal} refreshMessages={props.triggerRefresh}/>
+        <NewMessageModal user={props.user} showModal={modalVisible} dismissModal={showModal} refreshMessages={props.triggerRefresh}/>
         </div>
     );
 }

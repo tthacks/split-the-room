@@ -5,6 +5,9 @@ function SplashScreen(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    const validUsernames = ["red", "green", "blue"];
+    const validPasswords = ["red", "green", "blue"];
+
     function usernameHandler(e) {
         setUsername(e.target.value);
     }
@@ -14,11 +17,14 @@ function SplashScreen(props) {
     }
 
     function confirmCredentials() {
-        if(username==="admin" && password === "password") {
+        let userValid = validUsernames.indexOf(username);
+        let passValid = validPasswords.indexOf(password);
+        if(userValid > -1 && passValid > -1 && userValid == passValid) {
+        props.setUser(username);
         props.allowAccess(true);
         }
         else {
-            alert("That username/password combination does not exist.\n(Hint: the username is admin and the password is password)");
+            alert("That username/password combination does not exist.");
         }
     }
 
