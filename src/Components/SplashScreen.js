@@ -6,8 +6,8 @@ function SplashScreen(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const validUsernames = ["red", "yellow", "green"];
-    const validPasswords = ["red", "yellow", "green"];
+    const validUsernames = props.usernames;
+    const validPasswords = props.passwords;
 
     function usernameHandler(e) {
         setUsername(e.target.value);
