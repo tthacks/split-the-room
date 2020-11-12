@@ -31,27 +31,6 @@ function RoommateListPage(props) {
         }
     }
 
-
-
-    // function fetchRoommates() {
-    //     $.get('/fetchRoommates').done(function(obj) {
-    //         console.log(obj.data);
-    //         if (obj === undefined || obj.data === undefined) {
-    //             console.log("fail");
-    //         }
-    //         else {
-    //             const d = obj.data.reverse();
-    //             setRoommates(d.map(function(m) {
-    //                 return (<RoommateAcct key={m.id} _id={m._id} username={m.username} admin={m.admin}/>)
-    //             }));
-    //         }
-
-    //     })
-    //     .fail(function(obj) {
-    //         console.log(obj.responseText);
-    //     });
-    // }
-
     return(
         <div style={pageStyle}>
             {listRoommates()}

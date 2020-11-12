@@ -34,12 +34,30 @@ function App() {
     setActive(3);
   }
 
+  function placeHouseName() {
+    if (!noTabs) {
+      return (
+        <div>
+          <h1 style={{color: colors.light3, display: "inline", marginTop: 0, paddingTop: 30, paddingLeft: 30, fontSize: 80}}>{houseName}</h1>
+          <h3 style={{color: colors.light3, display: "inline", paddingLeft: 30, fontSize: 25}}>4 members</h3>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <h1 style={{color: colors.light3, float: "left", paddingTop: 30, paddingLeft: 30}}>Back</h1>
+        <h1 style={{color: colors.light3, margin: 0, paddingTop: 30, paddingRight: 30, textAlign: "right", fontSize: 70}}>{houseName}</h1>
+        <h3 style={{color: colors.light3, paddingRight: 30, textAlign: "right", fontSize: 25}}>4 members</h3>
+      </div>
+    );
+  }
+
   return (
     <div>
       {!isSignedIn && <SplashScreen usernames ={validUsernames} passwords ={validPasswords} allowAccess={signIn} setUser={logInUser}/>}
       {isSignedIn && <div style={{backgroundColor: colors.blue4, height: "100vh", width: "100vw"}}>
       <div onClick={gotoRoommateList}>
-        <h1 style={{color: colors.light3, marginTop: 0, paddingTop: 30, fontSize: 50}}>{houseName}</h1>
+        {placeHouseName()}
       </div>
     <div>
       {noTabs === false && <TabHeader active={currentlyActive} setActive={setActive}/>}
