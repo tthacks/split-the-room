@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import $ from 'jquery';
-import '../Stylesheets/modal.css';
+import '../../Stylesheets/modal.css';
 
 function NewMessageModal(props) {
 

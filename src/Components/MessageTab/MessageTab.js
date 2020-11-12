@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Message from './Message';
 import $ from 'jquery';
-import * as colors from '../colors';
+import * as colors from '../../colors';
 import NewMessageModal from './NewMessageModal';
 function MessageTab(props) {
 
