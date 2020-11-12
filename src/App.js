@@ -28,6 +28,7 @@ function App() {
       {!isSignedIn && <SplashScreen allowAccess={signIn} setUser={logInUser}/>}
       {isSignedIn && <div style={{backgroundColor: colors.blue4, height: "100vh", width: "100vw"}}>
     <h1 style={{color: colors.light3, marginTop: 0, paddingTop: 30, fontSize: 50}}>{houseName}</h1>
+    <img src={"profile_pic_"+currentUser+".svg"} alt="user profile pic"></img>
     <div>
       <TabHeader active={currentlyActive} setActive={setActive}/>
       {currentlyActive === 0 && <MessageTab user={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
