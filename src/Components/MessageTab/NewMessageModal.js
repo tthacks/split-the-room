@@ -41,12 +41,12 @@ function NewMessageModal(props) {
 
 return(
     <div>
-        {props.showModal && <div class="modal" id="messageModal">
-        <div class="modal-content">
+        {props.showModal && <div className="modal" id="messageModal">
+        <div className="modal-content">
         <h3 onClick={dismissModal}>X</h3>
             <h2>New Message</h2>
             <textarea onChange={messageHandler} placeholder="Type message here..."></textarea>
-            <div class="check-urgent">
+            <div className="check-urgent">
             Mark urgent
             <input type="checkbox" onChange={isUrgentHandler}></input> 
             </div>

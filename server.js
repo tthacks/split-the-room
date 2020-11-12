@@ -82,6 +82,16 @@ let retreiveAllMessagesList = function(db ){
   return cursor;
 };
 
+let retreiveAllFinancesList = function(db ){
+  let cursor;
+  try {
+    cursor = db.collection('finances').find({});
+  } catch (err) {
+    if(VERBOSE)console.log("retreiveAllFinancesList: retreiveAllFinancesList Error\n" + err);
+  }
+  return cursor;
+};
+
 let retreiveAllChoresList = function(db ){
   let cursor;
   try {
@@ -104,6 +114,20 @@ app.get('/fetchmessages', function (req, res) {
     }
   });
 });
+
+app.get('/fetchfinances', function (req, res) {
+  if(VERBOSE)console.log("/fetchfinances request");
+  let list = retreiveAllFinancesList(dbo);
+  list.toArray(function(err, docs){
+    if(err){
+      writeBadRequestResponse(res, "fetchfinances: Error in fetching data: " + err);
+    }
+    else{
+      writeOKResponse(res, "fetchfinances: Succesfully Fetched Finance Data ", docs);
+    }
+  });
+});
+
 
 app.get('/fetchchores', function(req, res) {
   if(VERBOSE)console.log("/fetchchores requirest");

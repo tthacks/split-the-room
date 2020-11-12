@@ -45,12 +45,12 @@
     
 //     return (
 //         <div>
-//             {/* {props.showModal && <div class="modal" id="roommateModal">
-//             <div class="modal-content">
+//             {/* {props.showModal && <div className="modal" id="roommateModal">
+//             <div className="modal-content">
 //             <h3 onClick={dismissModal}>X</h3>
 //                 <h2>Find User</h2>
 //                 <textarea onChange={usernameHandler} placeholder="Type new roommate's username here..."></textarea>
-//                 <div class="check-admin">
+//                 <div className="check-admin">
 //                 Mark admin
 //                 <input type="checkbox" onChange={isAdminHandler}></input> 
 //                 </div>
