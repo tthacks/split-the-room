@@ -3,14 +3,23 @@ import * as colors from "../../colors"
 
 function TabHeader(props) {
 
+    const pageList = props.pageList;
+
     function setMessagesActive() {
         props.setActive(0);
+        pageList.push(0);
+        props.addPage(pageList);
+        console.log(props.pageList);
     }
     function setFinancesActive() {
         props.setActive(1);
+        pageList.push(1);
+        props.addPage(pageList);
     }
     function setChoresActive() {
         props.setActive(2);
+        pageList.push(2);
+        props.addPage(pageList);
     }
 
 return(

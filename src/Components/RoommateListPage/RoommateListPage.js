@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import RoommateAcct from './RoommateAcct';
+import RoommateAcctEntry from './RoommateAcctEntry';
 import $ from 'jquery';
 import * as colors from '../../colors';
 import AddRoommateModal from './AddRoommateModal';
@@ -28,9 +28,9 @@ function RoommateListPage(props) {
         let list = validUsernames.map(function (m) {
             console.log(m);
             if (admins.includes(m)) {
-                return (<RoommateAcct admin={true} username={m}/>);
+                return (<RoommateAcctEntry key={m._id} _id={m._id} pageList={props.pageList} addPage={props.addPage} setClickedUser={props.setClickedUser} currentlyActive={props.currentlyActive} setActive={props.setActive} admin={true} username={m}/>);
             }
-            return (<RoommateAcct admin={false} username={m}/>);
+            return (<RoommateAcctEntry key={m._id} _id={m._id} pageList={props.pageList} addPage={props.addPage} setClickedUser={props.setClickedUser} setActive={props.setActive} admin={false} username={m}/>);
         });
         // addToList(list);
         return list;
