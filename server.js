@@ -33,6 +33,13 @@ let insertDocument = function(db, collectionName, data, callback) {
   });
 };
 
+let insertMultiple = function(db, collectionName, data, callback) {
+  db.collection(collectionName).insertMany( data, function(err, result) {
+    if(VERBOSE)console.log("insertDocument: Inserted multiple documents into the "+collectionName+" collection. : " + data._id);
+    if(callback)callback(data);
+  });
+};
+
 let deleteAllDocuments = function(db, collectionName, callback) {
   db.collection(collectionName).deleteMany({}, function(err, result) {
     if(VERBOSE)console.log("deleteAllDocuments: deleted all documents from "+collectionName);
@@ -167,6 +174,14 @@ app.post('/newmessage', function (req, res) {
     writeOKResponse(res, "newmessage: Created Successfully", {_id: data._id});
   });
 });
+
+app.post('/newcharges', function(req, res) {
+  let charges = req.body; 
+  insertMultiple(dbo, "finances", charges, function(data) {
+    writeOKResponse(res, "newcharges: Created Successfully", {_id: data._id});
+  })
+
+})
 
 app.post('/newchore', function (req, res) {
   let chore = req.body;
