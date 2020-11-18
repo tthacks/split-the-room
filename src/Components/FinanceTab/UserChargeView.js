@@ -1,16 +1,17 @@
 import React from 'react';
+import $ from 'jquery';
 import * as colors from '../../colors';
 import '../../Stylesheets/finances.css';
 
 function UserChargeView(props) {
 
     function formatValue() {
+        const value = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(props.value);
         if(props.value < 0) {
-            const value = 0 - props.value;
-            return <h4 style={{color: colors.red}}>{'-$' + value}</h4>
+            return <h4 style={{color: colors.red}}>{value}</h4>
         }
         else {
-            return <h4 style={{color: colors.green}}>{'$' + props.value}</h4>
+            return <h4 style={{color: colors.green}}>{value}</h4>
         }
     }
 
@@ -28,6 +29,16 @@ function UserChargeView(props) {
 
     function payDebt() {
         //TODO
+        let newCharge = {
+            user1: props.user, 
+            user2: props.currentUser,
+            value: 0 - Number(props.value),
+            isComplete: true, 
+            dateCompleted: new Date().toDateString(),
+        }
+        $.post("/newcharges", newCharge, function() {
+            props.triggerRefresh();
+        })
     }
 
     if(props.currentUser === props.user) {

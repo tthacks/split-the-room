@@ -25,35 +25,23 @@ function NewFinanceModal(props) {
 
     function submit() {
         console.log(targetUsers.length);
-        if(targetUsers.length > 0) {
+        for(let x = 0; x < targetUsers.length; x++) {
             let newCharge = {
-                user1: targetUsers[0],
+                user1: targetUsers[x],
                 user2: props.user,
                 value: charge,
                 memo: memo, 
                 isComplete: false,
-                dateCompleted: ""
+                dateCompleted: new Date().toDateString()
             };
-        // for(let x = 0; x < targetUsers.length; x++) {
-        //     newCharges = [...newCharges, ({
-        //         user1: targetUsers[x],
-        //         user2: props.user,
-        //         value: charge,
-        //         memo: memo, 
-        //         isComplete: false,
-        //         dateCompleted: ""
-        //     })];
-        // }
-        console.log(newCharge);
-        $.post('/newcharges', newCharge, function() {
+            $.post('/newcharges', newCharge);
+        }
             setMemo("");
             setCharge("");
-            // setTargetUsers([]);
+            setTargetUsers([]);
             props.refreshFinances();
             dismissModal();
-        });
     }
-}
 
     function addToCheckedList(e) {
         if(e.target.checked) {
@@ -61,13 +49,11 @@ function NewFinanceModal(props) {
             setTargetUsers(targetUsers);
         }
         else {
-            let newTarget = [];
-            for(let x = 0; x < targetUsers.length; x++) {
-                if(targetUsers[x] !== e.target.id) {
-                    newTarget.push(targetUsers[x]);
-                }
-            }  
-            targetUsers = newTarget;       
+            let idx = targetUsers.indexOf(e.target.id);
+            if(idx > -1) {
+            targetUsers.splice(idx, 1);
+            }
+            setTargetUsers(targetUsers);
         }
         console.log(targetUsers);
     }

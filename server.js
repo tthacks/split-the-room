@@ -22,7 +22,12 @@ MongoClient.connect(url, { useUnifiedTopology: true }, function(err, db) {
 
   dbo.createCollection("messages", function(err, res) {
     if (err) throw err;
-    if(VERBOSE)console.log("Collection tasks created!");
+    if(VERBOSE)console.log("Collection messages created!");
+  });
+
+  dbo.createCollection("finances", function(err, res) {
+    if (err) throw err;
+    if(VERBOSE)console.log("Collection finances created!");
   });
 });
 
@@ -149,6 +154,18 @@ app.get('/fetchchores', function(req, res) {
   })
 })
 
+app.post('/deleteallfinances', function (req, res) {
+  if(VERBOSE)console.log("/deleteallfinances request");
+
+  deleteAllDocuments(dbo, "finances", function(err){
+    if(err){
+      writeBadRequestResponse(res, "deletefinances: Delete Document Failed" + err);
+      return;
+    }
+    writeOKResponse(res, "deletefinances: Task deleted Successfully");
+  });
+});
+
 
 app.post('/deleteallmessages', function (req, res) {
   if(VERBOSE)console.log("/deleteallmessages request");
@@ -177,7 +194,7 @@ app.post('/newmessage', function (req, res) {
 
 app.post('/newcharges', function(req, res) {
   let charges = req.body; 
-  insertMultiple(dbo, "finances", charges, function(data) {
+  insertDocument(dbo, "finances", charges, function(data) {
     writeOKResponse(res, "newcharges: Created Successfully", {_id: data._id});
   })
 

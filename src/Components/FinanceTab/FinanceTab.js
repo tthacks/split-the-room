@@ -9,6 +9,7 @@ function FinanceTab(props) {
     const [modalVisible, toggleVisiblity] = useState(false);
     const [chargeView, setChargeView] = useState([]);
     const [transactionList, setTransactionList] = useState([]);
+    const debugMode = true;
     
     const userList = ['red', 'yellow', 'green', 'house'];
     const outstandingDebt = [0, 0, 0, 0];
@@ -45,13 +46,20 @@ function FinanceTab(props) {
         marginRight: 50
     };
 
+    function deleteAll() {
+        $.post('/deleteallfinances')
+        .done(function(obj) {
+          fetchTransactionHistory();
+        })
+      }
+
     function setHouseDebts() {
         const debt_list = [];
         for(let x = 0; x < userList.length; x++) {
             debt_list.push({user: userList[x], value: outstandingDebt[x]})
         }
         setChargeView(debt_list.map(function(d) {
-            return <UserChargeView currentUser={props.user} user={d.user} value={d.value}/>;
+            return <UserChargeView currentUser={props.user} user={d.user} value={d.value} triggerRefresh={props.triggerRefresh}/>;
         }));
     }
 
@@ -64,24 +72,16 @@ function FinanceTab(props) {
             //filter out the ones that don't pertain to us
             let h = history[i];
             if(h.user1 === props.user) { //we owe user2 money
-                if(h.isComplete) { //this is a history element
-                    t.push(<TransactionHistoryElement user={h.user2} value={0-h.value} dateCompleted={h.dateCompleted}/>);
-                }
-                else { //still an outstanding debt
-                    outstandingDebt[userList.indexOf(h.user2)] = outstandingDebt[userList.indexOf(h.user2)] - h.value;
-                }
+                    t.push(<TransactionHistoryElement user={props.user} user1={h.user1} user2={h.user2} value={h.value} isComplete={h.isComplete} dateCompleted={h.dateCompleted}/>);
+                    outstandingDebt[userList.indexOf(h.user2)] = Number(outstandingDebt[userList.indexOf(h.user2)]) - Number(h.value);
             }
             else if(h.user2 === props.user) { //user1 owes us money
-                if(h.isComplete) {
-                t.push(<TransactionHistoryElement user={h.user2} value={h.value} dateCompleted={h.dateCompleted}/>);
-                }
-                else { //still an outstanding debt
-                    outstandingDebt[userList.indexOf(h.user1)] = outstandingDebt[userList.indexOf(h.user1)] + h.value;
-                }
+                t.push(<TransactionHistoryElement user={props.user} user1={h.user1} user2={h.user2} value={h.value} isComplete={h.isComplete} dateCompleted={h.dateCompleted}/>);
+                    outstandingDebt[userList.indexOf(h.user1)] = Number(outstandingDebt[userList.indexOf(h.user1)]) + Number(h.value);
             }
         }
         setHouseDebts();
-        setTransactionList(t);
+        setTransactionList(t.reverse());
     }
 
     function showModal() {
@@ -90,17 +90,19 @@ function FinanceTab(props) {
 
     return(
         <div style={pageStyle}>
+          {debugMode &&
+          <button onClick={deleteAll}>Delete all</button>}
             <div style={{marginLeft: "30%", marginRight: "30%", display: "flex", justifyContent: "space-evenly"}}>
                 {chargeView}
             </div>
         <div>
-            <h2 style={{color: colors.dark4}}>Transaction History</h2>
+            <h2 style={{color: colors.dark4}}>{"Transaction History"}</h2>
             {transactionList}
         </div>
     
       <div style={{backgroundColor:colors.dark2, padding: 5}}>
           <div onClick={showModal} style={{backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
-              <p style={{color: colors.light3, padding: 5}}>NEW CHARGE</p>
+              <p style={{color: colors.light3, padding: 5}}>{"NEW CHARGE"}</p>
           </div>
       </div>
       <NewFinanceModal user={props.user} userList={userList} showModal={modalVisible} dismissModal={showModal} refreshFinances={props.triggerRefresh}/>
