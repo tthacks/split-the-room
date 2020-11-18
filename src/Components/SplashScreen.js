@@ -30,13 +30,13 @@ function SplashScreen(props) {
     }
 
     return(
-        <div class="splashscreen">
+        <div className="splashscreen">
             <img src="split-the-door.svg" alt="Split the Room logo"></img>
             <h1>{"Split the Room"}</h1>
-            <div class="text-group">{"Username   "}
+            <div className="text-group">{"Username   "}
             <input type="text" value={username} onChange={usernameHandler}/>
             </div>
-            <div class="text-group">
+            <div className="text-group">
             {"Password   "}
             <input type="password" value={password} onChange= {passwordHandler} />
             </div>

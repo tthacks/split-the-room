@@ -1,0 +1,24 @@
+.chargeview {
+    display: inline-block;
+    width: 200px;
+}
+
+.chargeview img {
+    width: 50px;
+}
+
+.transaction {
+    background-color: #eceff4;
+    width: 98%;
+    margin: 1%;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.transaction .date {
+    margin: 20px;
+}
+
+.transaction .value {
+    margin: 20px;
+}
