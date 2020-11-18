@@ -11,10 +11,11 @@ import * as colors from './colors';
 
 function App() {
 
-  //const currentlyActive = 0; //0 is messages, 1 is finances, 2 is chores, 3 is a page with no tabs
+  // currentlyActive: 0 is messages, 1 is finances, 2 is chores, 3 is a page with list of roommates, 4 is roommate account page
   const [refresh, triggerRefresh] = useState(0);
   const [currentlyActive, setActive] = useState(0);
-  const [noTabs, addTabs] = useState(false);
+  //const pageHeader: 0 is page w/ tabs, 1 is for list of roommate page, 2 is roommate account page
+  const [pageHeader, setPageHeader] = useState(0);
   const [isSignedIn, signIn] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
   const [houseName, setHouseName] = useState("The Hokie Haus");
@@ -35,7 +36,7 @@ function App() {
   }
 
   function gotoRoommateList() {
-    addTabs(true);
+    setPageHeader(1);
     setActive(3);
     pageList.push(3);
     console.log(pageList);
@@ -49,15 +50,15 @@ function App() {
     console.log(pageList);
     setActive(prev);
     if (prev < 3) {
-      addTabs(false);
+      setPageHeader(0);
     }
     else {
-      addTabs(true);
+      setPageHeader(1);
     }
   }
 
   function setUpHeaders() {
-    if (!noTabs) {
+    if (pageHeader == 0) {
       return (
         <div>
           <h1 onClick={gotoRoommateList} style={{color: colors.light3, display: "inline", marginTop: 0, paddingTop: 30, paddingLeft: 30, fontSize: 80}}>{houseName}</h1>
@@ -65,13 +66,22 @@ function App() {
         </div>
       );
     }
-    return (
-      <div>
-        <h1 onClick={goBack} style={{color: colors.light3, float: "left", paddingTop: 30, paddingLeft: 30}}> &lt; Back</h1>
-        <h1 style={{color: colors.light3, margin: 0, paddingTop: 30, paddingRight: 30, textAlign: "right", fontSize: 70}}>{houseName}</h1>
-        <h3 style={{color: colors.light3, paddingRight: 30, textAlign: "right", fontSize: 25}}>4 members</h3>
-      </div>
-    );
+    else if (pageHeader == 1) {
+      return (
+        <div>
+          <h1 onClick={goBack} style={{color: colors.light3, float: "left", paddingTop: 30, paddingLeft: 30}}> &lt; Back</h1>
+          <h1 style={{color: colors.light3, margin: 0, paddingTop: 30, paddingRight: 30, textAlign: "right", fontSize: 70}}>{houseName}</h1>
+          <h3 style={{color: colors.light3, paddingRight: 30, textAlign: "right", fontSize: 25}}>4 members</h3>
+        </div>
+      );
+    }
+    else {
+      return (
+        <div>
+          <h1 onClick={goBack} style={{color: colors.light3, float: "left", paddingTop: 30, paddingLeft: 30}}> &lt; Back</h1>
+        </div>
+      );
+    }
   }
 
   // function updateBgColor() {
@@ -90,12 +100,12 @@ function App() {
       {isSignedIn && <div style={{backgroundColor: bgColor, height: "100vh", width: "100vw"}}>
       {setUpHeaders()}
     <div>
-      {noTabs === false && <TabHeader pageList={pageList} addPage={addPage} active={currentlyActive} setActive={setActive}/>}
+      {pageHeader == 0 && <TabHeader pageList={pageList} addPage={addPage} active={currentlyActive} setActive={setActive}/>}
       {currentlyActive === 0 && <MessageTab user={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
       {currentlyActive === 1 && <FinanceTab user = {currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
       {currentlyActive === 2 && <ChoresTab triggerRefresh={refreshView} refreshCounter={refresh}/>}
       {currentlyActive === 3 && <RoommateListPage pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} houseName={houseName} setHouseName={setHouseName} user={currentUser} admins ={adminList} usernames ={validUsernames} triggerRefresh={refreshView} refreshCounter={refresh}/>}
-      {currentlyActive === 4 && <RoommateAcctPage clickedUser={clickedUser} setBgColor={setBgColor} triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 4 && <RoommateAcctPage houseName={houseName} setPageHeader={setPageHeader} clickedUser={clickedUser} setBgColor={setBgColor} triggerRefresh={refreshView} refreshCounter={refresh}/>}
     </div>
     </div>
     }
