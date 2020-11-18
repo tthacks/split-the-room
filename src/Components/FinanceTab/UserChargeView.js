@@ -23,12 +23,23 @@ function UserChargeView(props) {
             return <button onClick={payDebt}>MARK PAID</button>
         }
         else {
-        return <button>REMIND</button>
+        return <button onClick={remindUser}>REMIND</button>
         }
     }
 
+    function remindUser() {
+        const value = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(props.value);
+        let reminder ={
+            target: props.user,
+            msg: "Don't forget to pay " + props.currentUser + " " + value + "!",
+            isVisible: true
+        };
+        $.post("/newnotification", reminder, function() {
+            props.triggerRefresh();
+        })
+    }
+
     function payDebt() {
-        //TODO
         let newCharge = {
             user1: props.user, 
             user2: props.currentUser,

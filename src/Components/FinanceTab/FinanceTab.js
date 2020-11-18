@@ -31,15 +31,7 @@ function FinanceTab(props) {
         console.log(obj.responseText);
       });
     }
-
-    //FORMAT: user1 owes user2 value 
-    const history = [{user1: 'yellow', user2: 'red', value: 3.00, isComplete: false, dateCompleted: ""},
-    {user1: 'red', user2: 'green', value: 50.00, isComplete: false, dateCompleted: ""},
-    {user1: 'yellow', user2: 'green', value: 30.00, isComplete: false, dateCompleted: ""},
-    {user1: 'red', user2: 'green', value: 50.00, isComplete: true, dateCompleted: "11/20/2020"},
-    {user1: 'green', user2: 'red', value: 10.00, isComplete: true, dateCompleted: "11/15/2020"},
-    {user1: 'yellow', user2: 'green', value: 20.00, isComplete: true, dateCompleted: "11/12/2020"}];
-
+    
     const pageStyle = {
         backgroundColor: colors.light1,
         marginLeft: 50,
