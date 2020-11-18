@@ -1,3 +1,4 @@
+const {ObjectId} = require('mongodb');
 const express = require("express");
 const bodyParser   = require('body-parser');
 const app = express();
@@ -22,7 +23,22 @@ MongoClient.connect(url, { useUnifiedTopology: true }, function(err, db) {
 
   dbo.createCollection("messages", function(err, res) {
     if (err) throw err;
-    if(VERBOSE)console.log("Collection tasks created!");
+    if(VERBOSE)console.log("Collection messages created!");
+  });
+
+  dbo.createCollection("finances", function(err, res) {
+    if (err) throw err;
+    if(VERBOSE)console.log("Collection finances created!");
+  });
+
+  dbo.createCollection("chores", function(err, res) {
+    if (err) throw err;
+    if(VERBOSE)console.log("Collection chores created!");
+  });
+
+  dbo.createCollection("notifications", function(err, res) {
+    if (err) throw err;
+    if(VERBOSE)console.log("Collection notifications created!");
   });
 });
 
@@ -40,18 +56,18 @@ let deleteAllDocuments = function(db, collectionName, callback) {
   })
 }
 
-// let updateOneDocument = function(db, collectionName, query, newvalues, callback) {
-//   if(VERBOSE)console.log("updateOneDocument: query:" + JSON.stringify(query));
-//   if(VERBOSE)console.log("updateOneDocument: newValue:" + JSON.stringify(newvalues));
-//   db.collection(collectionName).updateOne(query,{ $set: newvalues }, function(err, res) {
-//     if (err) {
-//       throw err;
-//     }
-//     if(VERBOSE)console.log("updateOneDocument: Updated a document in "+collectionName+" collection. ");
+let updateOneDocument = function(db, collectionName, query, newvalues, callback) {
+  if(VERBOSE)console.log("updateOneDocument: query:" + JSON.stringify(query));
+  if(VERBOSE)console.log("updateOneDocument: newValue:" + JSON.stringify(newvalues));
+  db.collection(collectionName).updateOne(query,{ $set: newvalues }, function(err, res) {
+    if (err) {
+      throw err;
+    }
+    if(VERBOSE)console.log("updateOneDocument: Updated a document in "+collectionName+" collection. ");
 
-//     if(callback)callback();
-//   });
-// };
+    if(callback)callback();
+  });
+};
 
 //https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 let writeOKResponse = function(res, message, data){
@@ -72,29 +88,19 @@ let writeBadRequestResponse = function(res, message){
   res.end(message);
 }
 
-let retreiveAllMessagesList = function(db ){
+let retreiveCollection = function(db, collection ){
   let cursor;
   try {
-    cursor = db.collection('messages').find({});
+    cursor = db.collection(collection).find({});
   } catch (err) {
-    if(VERBOSE)console.log("retreiveAllMessagesList: retreiveAllMessagesList Error\n" + err);
-  }
-  return cursor;
-};
-
-let retreiveAllChoresList = function(db ){
-  let cursor;
-  try {
-    cursor = db.collection('chores').find({});
-  } catch (err) {
-    if(VERBOSE)console.log("retreiveAllChoresList: retreiveAllChoresList Error\n" + err);
+    if(VERBOSE)console.log("retrieveCollection: retrieve "+collection+" Error\n" + err);
   }
   return cursor;
 };
 
 app.get('/fetchmessages', function (req, res) {
   if(VERBOSE)console.log("/fetchmessages request");
-  let list = retreiveAllMessagesList(dbo);
+  let list = retreiveCollection(dbo, 'messages');
   list.toArray(function(err, docs){
     if(err){
       writeBadRequestResponse(res, "fetchmessages: Error in fetching data: " + err);
@@ -105,9 +111,36 @@ app.get('/fetchmessages', function (req, res) {
   });
 });
 
+app.get('/fetchfinances', function (req, res) {
+  if(VERBOSE)console.log("/fetchfinances request");
+  let list = retreiveCollection(dbo, 'finances');
+  list.toArray(function(err, docs){
+    if(err){
+      writeBadRequestResponse(res, "fetchfinances: Error in fetching data: " + err);
+    }
+    else{
+      writeOKResponse(res, "fetchfinances: Succesfully Fetched Finance Data ", docs);
+    }
+  });
+});
+
+app.get('/fetchnotifications', function (req, res) {
+  if(VERBOSE)console.log("/fetchnotifications request");
+  let list = retreiveCollection(dbo, 'notifications');
+  list.toArray(function(err, docs){
+    if(err){
+      writeBadRequestResponse(res, "fetchnotifications: Error in fetching data: " + err);
+    }
+    else{
+      writeOKResponse(res, "fetchnotifications: Succesfully Fetched Notification Data ", docs);
+    }
+  });
+});
+
+
 app.get('/fetchchores', function(req, res) {
   if(VERBOSE)console.log("/fetchchores requirest");
-  let list = retreiveAllChoresList(dbo);
+  let list = retreiveCollection(dbo, 'chores');
   list.toArray(function(err, docs) {
     if(err) {
       writeBadRequestResponse(res, "fetchchores: Error in fetching data: " + err);
@@ -117,6 +150,18 @@ app.get('/fetchchores', function(req, res) {
     }
   })
 })
+
+app.post('/deleteallfinances', function (req, res) {
+  if(VERBOSE)console.log("/deleteallfinances request");
+
+  deleteAllDocuments(dbo, "finances", function(err){
+    if(err){
+      writeBadRequestResponse(res, "deletefinances: Delete Document Failed" + err);
+      return;
+    }
+    writeOKResponse(res, "deletefinances: Task deleted Successfully");
+  });
+});
 
 
 app.post('/deleteallmessages', function (req, res) {
@@ -131,26 +176,66 @@ app.post('/deleteallmessages', function (req, res) {
   });
 });
 
+app.post('/deletenotifications', function (req, res) {
+  if(VERBOSE)console.log("/deleteallmessages request");
+
+  deleteAllDocuments(dbo, "notifications", function(err){
+    if(err){
+      writeBadRequestResponse(res, "deletemessages: Delete Document Failed" + err);
+      return;
+    }
+    writeOKResponse(res, "deletemessages: Task deleted Successfully");
+  });
+});
+
+
+app.post('/deletenotification', function (req, res) {
+  if(VERBOSE)console.log("/deletenotification request");
+
+  let task_id = req.body._id;
+  if(task_id == null){
+    writeBadRequestResponse(res, "deletenotification: _id not defined." + req.body);
+    return;
+  }
+
+  if(task_id.length<12){
+    writeBadRequestResponse(res, "deletenotification: _id must be  must be a single String of 12 bytes or a string of 24 hex characters." + req.body);
+    return;
+  }
+
+  updateOneDocument(dbo, "tasks",   {_id:ObjectId(task_id)}, {deleted:true}, function(err){
+    if(err){
+      writeBadRequestResponse(res, "deletenotification: Delete Document Failed" + err);
+      return;
+    }
+    writeOKResponse(res, "deletenotification: Task deleted Successfully", {_id: task_id});
+  });
+});
+
 app.post('/newmessage', function (req, res) {
   let message = req.body;
-
-  // if(typeof(message.author)!="string"){
-  //   writeBadRequestResponse(res, "newmessage: No title is defined.");
-  //   return;
-  // }
 
   insertDocument(dbo, "messages", message, function(data){
     writeOKResponse(res, "newmessage: Created Successfully", {_id: data._id});
   });
 });
 
+app.post('/newcharges', function(req, res) {
+  let charges = req.body; 
+  insertDocument(dbo, "finances", charges, function(data) {
+    writeOKResponse(res, "newcharges: Created Successfully", {_id: data._id});
+  })
+});
+
+app.post('/newnotification', function(req, res) {
+  let charges = req.body; 
+  insertDocument(dbo, "notifications", charges, function(data) {
+    writeOKResponse(res, "newnotification: Created Successfully", {_id: data._id});
+  })
+});
+
 app.post('/newchore', function (req, res) {
   let chore = req.body;
-
-  // if(typeof(message.author)!="string"){
-  //   writeBadRequestResponse(res, "newmessage: No title is defined.");
-  //   return;
-  // }
 
   insertDocument(dbo, "chores", chore, function(data){
     writeOKResponse(res, "newmessage: Created Successfully", {_id: data._id});

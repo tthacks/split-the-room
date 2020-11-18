@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import MessageTab from './Components/MessageTab/MessageTab';
 import FinanceTab from './Components/FinanceTab/FinanceTab';
 import ChoresTab from './Components/ChoresTab/ChoresTab';
@@ -8,6 +8,8 @@ import RoommateListPage from './Components/RoommateListPage/RoommateListPage';
 import RoommateAcctPage from './Components/SharedComponents/RoommateAcctPage';
 
 import * as colors from './colors';
+import $ from 'jquery';
+import NotificationBar from './Components/SharedComponents/NotificationBar';
 
 function App() {
 
@@ -96,13 +98,14 @@ function App() {
 
   return (
     <div>
+    <NotificationBar user={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>
       {!isSignedIn && <SplashScreen usernames ={validUsernames} passwords ={validPasswords} allowAccess={signIn} setUser={logInUser}/>}
       {isSignedIn && <div style={{backgroundColor: bgColor, height: "100vh", width: "100vw"}}>
       {setUpHeaders()}
     <div>
       {pageHeader == 0 && <TabHeader pageList={pageList} addPage={addPage} active={currentlyActive} setActive={setActive}/>}
       {currentlyActive === 0 && <MessageTab user={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
-      {currentlyActive === 1 && <FinanceTab user = {currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 1 && <FinanceTab user = {currentUser} userList={[...validUsernames, "house"]} triggerRefresh={refreshView} refreshCounter={refresh}/>}
       {currentlyActive === 2 && <ChoresTab triggerRefresh={refreshView} refreshCounter={refresh}/>}
       {currentlyActive === 3 && <RoommateListPage pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} houseName={houseName} setHouseName={setHouseName} user={currentUser} admins ={adminList} usernames ={validUsernames} triggerRefresh={refreshView} refreshCounter={refresh}/>}
       {currentlyActive === 4 && <RoommateAcctPage houseName={houseName} setPageHeader={setPageHeader} clickedUser={clickedUser} setBgColor={setBgColor} triggerRefresh={refreshView} refreshCounter={refresh}/>}
