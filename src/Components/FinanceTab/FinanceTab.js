@@ -48,10 +48,10 @@ function FinanceTab(props) {
     function setHouseDebts() {
         const debt_list = [];
         for(let x = 0; x < userList.length; x++) {
-            debt_list.push({user: userList[x], value: outstandingDebt[x]})
+            debt_list.push({key: x, user: userList[x], value: outstandingDebt[x]})
         }
         setChargeView(debt_list.map(function(d) {
-            return <UserChargeView currentUser={props.user} user={d.user} value={d.value} triggerRefresh={props.triggerRefresh}/>;
+            return <UserChargeView key={d._id} currentUser={props.user} user={d.user} value={d.value} triggerRefresh={props.triggerRefresh}/>;
         }));
     }
 
@@ -89,7 +89,9 @@ function FinanceTab(props) {
             </div>
         <div>
             <h2 style={{color: colors.dark4}}>{"Transaction History"}</h2>
+            <div style={{height: "250px", overflowY: "scroll"}}>
             {transactionList}
+            </div>
         </div>
     
       <div style={{backgroundColor:colors.dark2, padding: 5}}>

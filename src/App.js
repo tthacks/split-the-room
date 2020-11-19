@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import MessageTab from './Components/MessageTab/MessageTab';
 import FinanceTab from './Components/FinanceTab/FinanceTab';
 import ChoresTab from './Components/ChoresTab/ChoresTab';
@@ -8,7 +8,6 @@ import RoommateListPage from './Components/RoommateListPage/RoommateListPage';
 import RoommateAcctPage from './Components/SharedComponents/RoommateAcctPage';
 
 import * as colors from './colors';
-import $ from 'jquery';
 import NotificationBar from './Components/SharedComponents/NotificationBar';
 
 function App() {
