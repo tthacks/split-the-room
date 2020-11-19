@@ -16,5 +16,5 @@ export const red = '#bf616a';
 export const orange ='#d08770';
 export const yellow = '#ebcb8b';
 export const green = '#aebe8c';
-export const purple = 'b48ead';
+export const purple = '#b48ead';
 
