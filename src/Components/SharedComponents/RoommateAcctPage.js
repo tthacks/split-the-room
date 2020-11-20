@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Draggable from 'react-draggable';
 import $ from 'jquery';
 import * as colors from '../../colors';
+import Slider from '@material-ui/core/Slider';
 
 function RoommateAcctPage(props) {
 
@@ -30,10 +30,61 @@ function RoommateAcctPage(props) {
         padding: "2%"
     };
 
-    function changeBg() {
-        props.setBgColor(colors.red)
-        console.log("red");
-    }
+    const marks = [
+        {
+          value: 0,
+          label: '1',
+        },
+        {
+          value: 10,
+          label: '2',
+        },
+        {
+          value: 20,
+          label: '3',
+        },
+        {
+          value: 30,
+          label: '4',
+        },
+        {
+          value: 40,
+          label: '5',
+        },
+        {
+          value: 50,
+          label: '6',
+        },
+        {
+          value: 60,
+          label: '7',
+        },
+        {
+          value: 70,
+          label: '8',
+        },
+        {
+          value: 80,
+          label: '9',
+        },
+        {
+          value: 90,
+          label: '10',
+        },
+      ];
+      
+      function valuetext(value) {
+        return `${value}°C`;
+      }
+      
+      function valueLabelFormat(value) {
+        return marks.findIndex((mark) => mark.value === value) + 1;
+      }
+
+    // function changeBg() {
+    //     props.setBgColor(colors.red)
+    //     console.log("red");
+    // }
 
     return(
         <div>
@@ -46,20 +97,32 @@ function RoommateAcctPage(props) {
                     <h2 style={{textAlign: "center"}}>Member of {houseName}</h2>
                 </div>
                 <div>
-                    <text style={{fontSize: 20, marginLeft: "15%", width: "10%", display: "inline"}}>Messy</text>
-                    <hr style={{height: 5, width: "60%", color: colors.purple, backgroundColor: colors.purple, display: "inline-block", position: "relative", top: 5, left: 20}}></hr>
-                    <Draggable axis="x">
-                        <span class="dot" style={{height: 20, width: 20, backgroundColor: colors.light3, borderRadius: "50%", display: "inline-block", position: "relative", top: 2}}></span>
-                    </Draggable>
-                    <text style={{fontSize: 20, marginLeft: 20, marginRight: 20, display: "inline"}}>Tidy</text>
+                    <text id="discrete-slider-restrict" style={{fontSize: 20, marginLeft: "15%", width: "10%", display: "inline"}}>Messy</text>
+                    <text id="discrete-slider-restrict" style={{fontSize: 20, marginLeft: "58%", marginRight: 20, display: "inline"}}>Tidy</text>
+                    <Slider
+                        style={{marginLeft: "15%", width: "72%"}}
+                        defaultValue={20}
+                        valueLabelFormat={valueLabelFormat}
+                        getAriaValueText={valuetext}
+                        aria-labelledby="discrete-slider-restrict"
+                        step={null}
+                        valueLabelDisplay="auto"
+                        marks={marks}
+                    />
                 </div>
                 <div style={{paddingTop: 30, paddingBottom: 30}}>
-                    <text style={{fontSize: 20, marginLeft: "15%", width: "10%", display: "inline"}}>Quiet</text>
-                    <hr style={{height: 5, width: "60%", color: colors.purple, backgroundColor: colors.purple, display: "inline-block", position: "relative", top: 5, left: 27}}></hr>
-                    <Draggable axis="x">
-                        <span class="dot" style={{height: 20, width: 20, backgroundColor: colors.light3, borderRadius: "50%", display: "inline-block", position: "relative", top: 2}}></span>
-                    </Draggable>
-                    <text style={{fontSize: 20, marginLeft: 25, marginRight: 20, display: "inline"}}>Loud</text>
+                    <text id="discrete-slider-restrict" style={{fontSize: 20, marginLeft: "15%", width: "10%", display: "inline"}}>Quiet</text>
+                    <text id="discrete-slider-restrict" style={{fontSize: 20, marginLeft: "58%", marginRight: 20, display: "inline"}}>Loud</text>
+                    <Slider
+                        style={{marginLeft: "15%", width: "72%"}}
+                        defaultValue={20}
+                        valueLabelFormat={valueLabelFormat}
+                        getAriaValueText={valuetext}
+                        aria-labelledby="discrete-slider-restrict"
+                        step={null}
+                        valueLabelDisplay="auto"
+                        marks={marks}
+                    />
                 </div>
                 <div>
                     <text style={{fontSize: 20, marginLeft: "46%"}}>Pet Peeves</text>
