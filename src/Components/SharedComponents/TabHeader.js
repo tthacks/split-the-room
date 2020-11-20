@@ -9,7 +9,6 @@ function TabHeader(props) {
         props.setActive(0);
         pageList.push(0);
         props.addPage(pageList);
-        console.log(props.pageList);
     }
     function setFinancesActive() {
         props.setActive(1);

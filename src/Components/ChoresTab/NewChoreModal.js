@@ -2,36 +2,37 @@ import React, {useState} from 'react';
 import $ from 'jquery';
 
 function NewChoreModal(props) {
-    const [msg, setMsg] = useState("");
-    const [isUrgent, setUrgent] = useState(false);
+    const [name, setName] = useState("");
+    const [isRecurring, setRecurring] = useState(false);
 
 
     function dismissModal(e) {
         props.dismissModal();
     }
 
-    function messageHandler(e) {
-        setMsg(e.target.value);
+    function choreNameHandler(e) {
+        setName(e.target.value);
     }
 
-    function isUrgentHandler(e) {
-        setUrgent(!isUrgent);
+    function isRecurringHandler(e) {
+        setRecurring(!isRecurring);
     }
 
     function submit() {
-        let newMessage = {
-            author: props.user,
-            msg: msg,
-            important: isUrgent,
+        let newChore = {
+            name: name, 
+            recurrence: isRecurring, 
+            lastCompleted: "never", 
+            isDeleted: false,
         }
-        if (newMessage.msg === "") {
-            alert("Please include content in your message.");
+        if (newChore.name === "") {
+            alert("Please name the chore.");
         }
         else {
-            $.post('/newmessage', newMessage, function() {
-                setUrgent(false);
-                setMsg("");
-                props.refreshMessages();
+            $.post('/newchore', newChore, function() {
+                setRecurring(false);
+                setName("");
+                props.refreshChores();
                 dismissModal();
             });
         }
@@ -42,13 +43,13 @@ return(
         {props.showModal && <div className="modal" id="messageModal">
         <div className="modal-content">
         <h3 onClick={dismissModal}>X</h3>
-            <h2>New Message</h2>
-            <textarea onChange={messageHandler} placeholder="Type message here..."></textarea>
-            <div className="check-urgent">
-            Mark urgent
-            <input type="checkbox" onChange={isUrgentHandler}></input> 
+            <h2>{"New Chore"}</h2>
+            <input type="text" onChange={choreNameHandler}></input>
+            <div className="check-chore">
+            {"Chore repeats"}
+            <input type="checkbox" onChange={isRecurringHandler}></input> 
             </div>
-            <button onClick={submit}>Submit</button>
+            <button onClick={submit}>{"Submit"}</button>
         </div>
         </div>}
     </div>

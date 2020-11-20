@@ -105,7 +105,7 @@ function App() {
       {pageHeader == 0 && <TabHeader pageList={pageList} addPage={addPage} active={currentlyActive} setActive={setActive}/>}
       {currentlyActive === 0 && <MessageTab user={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
       {currentlyActive === 1 && <FinanceTab user = {currentUser} userList={[...validUsernames, "house"]} triggerRefresh={refreshView} refreshCounter={refresh}/>}
-      {currentlyActive === 2 && <ChoresTab triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 2 && <ChoresTab user ={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
       {currentlyActive === 3 && <RoommateListPage pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} houseName={houseName} setHouseName={setHouseName} user={currentUser} admins ={adminList} usernames ={validUsernames} triggerRefresh={refreshView} refreshCounter={refresh}/>}
       {currentlyActive === 4 && <RoommateAcctPage houseName={houseName} setPageHeader={setPageHeader} clickedUser={clickedUser} setBgColor={setBgColor} triggerRefresh={refreshView} refreshCounter={refresh}/>}
     </div>

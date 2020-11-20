@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import TodoChore from './TodoChore';
+import $ from 'jquery';
+import TodoChoreList from './TodoChoreList';
 import CompleteChore from './CompleteChore';
 import NewChoreModal from './NewChoreModal';
 import '../../Stylesheets/chores.css';
-import * as colors from "../../colors"
-
+import * as colors from "../../colors";
 function ChoresTab(props) {
 
     const [todoList, setTodoList] = useState([]);
     const [todoneList, setTodoneList] = useState([]);
     const [modalVisible, toggleVisiblity] = useState(false);
+    const debugMode = false;
 
     useEffect(fetchToDo, [props.refreshCounter]);
 
@@ -20,38 +21,51 @@ function ChoresTab(props) {
     };
 
     function fetchToDo() {
-        
-    const chores = [{name: "bring honor to your family name", lastCompleted: "10/30/2020"}, {name: "Attend water aerobics at the senior center", lastCompleted: "11/20/2020"}, {name: "Fight the concept of time", lastCompleted: "11/20/2020"}];
-    const completeChores = [{user: "yellow", name: "pick the fish up from fish camp"}, {user: "red", name: "fight the mummy"}, {user: "green", name: "become the mummy"}];
-        setTodoList(chores.map( function(d) {
-            return <TodoChore name={d.name} lastCompleted={d.lastCompleted}/>
-        }));
-        setTodoneList(completeChores.map(function(d) {
-            return<CompleteChore user={d.user} name={d.name}/>
-        }));
+        $.get('/fetchcompletechores')
+        .done(function (response) {
+            setTodoneList(response.data.map(function(d) {
+                return <CompleteChore key={d._id} item ={d} triggerRefresh={props.triggerRefresh}/>
+            }));
+        });
+        $.get('/fetchchores')
+        .done(function (obj) {
+          setTodoList(<TodoChoreList list={obj.data} currentUser={props.user} triggerRefresh={props.triggerRefresh}/>);
+        })
+        .fail(function (obj) {
+          console.log(obj.responseText);
+        });
     }
 
     function showModal() {
       toggleVisiblity(!modalVisible);
     }
 
+    function deleteCompleteChores() {
+            $.post('/deletecompletechores')
+            .done(function(obj) {
+              props.triggerRefresh();
+            });
+    }
+
+    function renderEmpty() {
+        if(todoList.length == 0) {
+            return(<div className="completedChore" style={{hidden: true}}>
+            </div>)
+        }
+    }
+
     return(
         <div style={pageStyle}>
             <div style={{display: "inline-flex", padding: 16}}>
                 <div style={{flex: 1}}>
-                    <h2>{"To-Do List"}</h2>
-                    <div style={{height: "280px", overflowY: "scroll", marginRight: "20px"}}>
                     {todoList}
-                    </div>
-                    <div className="markCompleteDelete">
-                        <button id="complete-button">{"MARK COMPLETE"}</button>
-                        <button id="delete-button">{"DELETE CHORE"}</button>
-                    </div>
                 </div>
                 <div style={{flex: 1}}>
-                    <h2>{"To-Done List"}</h2>
+                    {debugMode && <button onClick={deleteCompleteChores}>{"Delete Complete Chores"}</button>}
+                    <h2>{"To Done List"}</h2>
                     <div style={{height: "280px", overflowY: "scroll"}}>
-                    {todoneList}
+                        {renderEmpty()}
+                        {todoneList}
                     </div>
                 </div>
             </div>
@@ -60,7 +74,7 @@ function ChoresTab(props) {
                     <p style={{color: colors.light3, padding: 5}}>{"NEW CHORE"}</p>
                 </div>
             </div>
-                <NewChoreModal />
+                <NewChoreModal showModal={modalVisible} dismissModal={showModal} refreshChores={props.triggerRefresh}/>
         </div>
     );
 }

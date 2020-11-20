@@ -19,7 +19,6 @@ function FinanceTab(props) {
     function fetchTransactionHistory() {
         $.get('/fetchfinances')
       .done(function (obj) {
-        console.log(obj.data);
         if(obj === undefined || obj.data === undefined){
             console.log("fail");
         } 
