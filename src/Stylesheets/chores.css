@@ -1,0 +1,59 @@
+.todoitem {
+    background-color: #eceff4;
+    margin-top: 10px;
+    padding: 15px;
+    display: inline-flex;
+    width: 90%;
+    justify-content: space-between;
+}
+
+.todoitem input {
+    margin-top: 30px;
+    margin-bottom: 25px;
+    flex: 1;
+}
+
+.todoitem h3 {
+    padding-left: 25px;
+    flex: 4;
+    padding-right: 25px;
+}
+
+.todoitem p {
+    margin-top: 20px;
+    flex: 2;
+}
+
+.markCompleteDelete {
+    align-items: center;
+}
+
+.markCompleteDelete button{
+    border-style: none;
+    color: #eceff4;
+    padding: 10px;
+    margin: 5px;
+}
+
+#complete-button {
+    background-color: #aebe8c;
+}
+
+#delete-button {
+    background-color: #bf616a;
+}
+
+.completedChore {
+    background-color: #eceff4;
+    padding: 15px;
+    margin-top: 10px;
+    display: inline-flex;
+    width: 90%;
+    justify-content: space-between;
+}
+
+.completedChore button{
+    background-color: #eceff4;
+    border-style: none;
+    font-size: 30px;
+}

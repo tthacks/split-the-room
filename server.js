@@ -36,6 +36,11 @@ MongoClient.connect(url, { useUnifiedTopology: true }, function(err, db) {
     if(VERBOSE)console.log("Collection chores created!");
   });
 
+  dbo.createCollection("completechores", function(err, res) {
+    if (err) throw err;
+    if(VERBOSE)console.log("Collection completechores created!");
+  });
+
   dbo.createCollection("notifications", function(err, res) {
     if (err) throw err;
     if(VERBOSE)console.log("Collection notifications created!");
@@ -139,7 +144,7 @@ app.get('/fetchnotifications', function (req, res) {
 
 
 app.get('/fetchchores', function(req, res) {
-  if(VERBOSE)console.log("/fetchchores requirest");
+  if(VERBOSE)console.log("/fetchchores request");
   let list = retreiveCollection(dbo, 'chores');
   list.toArray(function(err, docs) {
     if(err) {
@@ -150,6 +155,31 @@ app.get('/fetchchores', function(req, res) {
     }
   })
 })
+
+app.get('/fetchcompletechores', function(req, res) {
+  if(VERBOSE)console.log("/fetchcompletechores request");
+  let list = retreiveCollection(dbo, 'completechores');
+  list.toArray(function(err, docs) {
+    if(err) {
+      writeBadRequestResponse(res, "completechores: Error in fecthing data: " + err);
+    }
+    else {
+      writeOKResponse(res, "fetchcompletechores: Successfully Fetched Complete Chore Data ", docs);
+    }
+  })
+})
+
+app.post('/deleteallmessages', function (req, res) {
+  if(VERBOSE)console.log("/deleteallmessages request");
+
+  deleteAllDocuments(dbo, "messages", function(err){
+    if(err){
+      writeBadRequestResponse(res, "deletemessages: Delete Document Failed" + err);
+      return;
+    }
+    writeOKResponse(res, "deletemessages: Task deleted Successfully");
+  });
+});
 
 app.post('/deleteallfinances', function (req, res) {
   if(VERBOSE)console.log("/deleteallfinances request");
@@ -163,16 +193,15 @@ app.post('/deleteallfinances', function (req, res) {
   });
 });
 
+app.post('/deletecompletechores', function (req, res) {
+  if(VERBOSE)console.log("/deletecompletechores request");
 
-app.post('/deleteallmessages', function (req, res) {
-  if(VERBOSE)console.log("/deleteallmessages request");
-
-  deleteAllDocuments(dbo, "messages", function(err){
+  deleteAllDocuments(dbo, "completechores", function(err){
     if(err){
-      writeBadRequestResponse(res, "deletemessages: Delete Document Failed" + err);
+      writeBadRequestResponse(res, "completechores: Delete Document Failed" + err);
       return;
     }
-    writeOKResponse(res, "deletemessages: Task deleted Successfully");
+    writeOKResponse(res, "completechores: Task deleted Successfully");
   });
 });
 
@@ -203,7 +232,7 @@ app.post('/deletenotification', function (req, res) {
     return;
   }
 
-  updateOneDocument(dbo, "tasks",   {_id:ObjectId(task_id)}, {deleted:true}, function(err){
+  updateOneDocument(dbo, "notifications",   {_id:ObjectId(task_id)}, {deleted:true}, function(err){
     if(err){
       writeBadRequestResponse(res, "deletenotification: Delete Document Failed" + err);
       return;
@@ -238,7 +267,69 @@ app.post('/newchore', function (req, res) {
   let chore = req.body;
 
   insertDocument(dbo, "chores", chore, function(data){
-    writeOKResponse(res, "newmessage: Created Successfully", {_id: data._id});
+    writeOKResponse(res, "newchore: Created Successfully", {_id: data._id});
+  });
+});
+
+app.post('/newcompletechore', function (req, res) {
+  let chore = req.body;
+
+  insertDocument(dbo, "completechores", chore, function(data){
+    writeOKResponse(res, "newcompletechore: Created Successfully", {_id: data._id});
+  });
+});
+
+app.post('/updatechore', function (req, res) {
+  if(VERBOSE)console.log("/updatechore request");
+
+  let task_id = req.body._id;
+  if(task_id == null){
+    writeBadRequestResponse(res, "updatechore: _id not defined." + req.body);
+    return;
+  }
+
+  if(task_id.length<12){
+    writeBadRequestResponse(res, "updatechore: _id must be  must be a single String of 12 bytes or a string of 24 hex characters." + req.body);
+    return;
+  }
+
+  updateOneDocument(dbo, "chores",   {_id:ObjectId(task_id)}, {lastCompleted:req.body.lastCompleted}, function(err){
+    if(err){
+      writeBadRequestResponse(res, "updatechore: Update Document Failed" + err);
+      return;
+    }
+    writeOKResponse(res, "updatechore: Chore updated Successfully", {_id: task_id});
+  });
+});
+
+app.post('/newcompletechore', function(req, res) {
+  let chore = req.body;
+
+  insertDocument(dbo, "completechores", chore, function(data){
+    writeOKResponse(res, "newcompletechore: Created Successfully", {_id: data._id});
+  });
+});
+
+app.post('/updatecompletechore', function (req, res) {
+  if(VERBOSE)console.log("/updatecompletechore request");
+
+  let task_id = req.body._id;
+  if(task_id == null){
+    writeBadRequestResponse(res, "updatechore: _id not defined." + req.body);
+    return;
+  }
+
+  if(task_id.length<12){
+    writeBadRequestResponse(res, "updatechore: _id must be  must be a single String of 12 bytes or a string of 24 hex characters." + req.body);
+    return;
+  }
+
+  updateOneDocument(dbo, "completechores",   {_id:ObjectId(task_id)}, {isDeleted:req.body.isDeleted}, function(err){
+    if(err){
+      writeBadRequestResponse(res, "updatechore: Update Document Failed" + err);
+      return;
+    }
+    writeOKResponse(res, "updatechore: Chore updated Successfully", {_id: task_id});
   });
 });
 

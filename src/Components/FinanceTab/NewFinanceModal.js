@@ -24,7 +24,6 @@ function NewFinanceModal(props) {
     }
 
     function submit() {
-        console.log(targetUsers.length);
         for(let x = 0; x < targetUsers.length; x++) {
             let newCharge = {
                 user1: targetUsers[x],
@@ -55,7 +54,6 @@ function NewFinanceModal(props) {
             }
             setTargetUsers(targetUsers);
         }
-        console.log(targetUsers);
     }
 
     function chargeCheckboxes() {

@@ -37,7 +37,6 @@ function MessageTab(props) {
     function fetchMessages() {
         $.get('/fetchmessages')
       .done(function (obj) {
-        console.log(obj.data);
         if(obj === undefined || obj.data === undefined){
             console.log("fail");
         } 
