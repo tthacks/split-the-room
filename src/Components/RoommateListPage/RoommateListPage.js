@@ -28,9 +28,32 @@ function RoommateListPage(props) {
         let list = validUsernames.map(function (m) {
             console.log(m);
             if (admins.includes(m)) {
-                return (<RoommateAcctEntry key={m._id} _id={m._id} pageList={props.pageList} addPage={props.addPage} setClickedUser={props.setClickedUser} currentlyActive={props.currentlyActive} setActive={props.setActive} admin={true} username={m}/>);
+                return (
+                    <RoommateAcctEntry 
+                        key={m._id} 
+                        _id={m._id} 
+                        pageList={props.pageList} 
+                        addPage={props.addPage} 
+                        setClickedUser={props.setClickedUser} 
+                        currentlyActive={props.currentlyActive} 
+                        setActive={props.setActive} 
+                        admin={true} 
+                        username={m}
+                    />
+                );
             }
-            return (<RoommateAcctEntry key={m._id} _id={m._id} pageList={props.pageList} addPage={props.addPage} setClickedUser={props.setClickedUser} setActive={props.setActive} admin={false} username={m}/>);
+            return (
+                <RoommateAcctEntry 
+                    key={m._id} 
+                    _id={m._id} 
+                    pageList={props.pageList} 
+                    addPage={props.addPage} 
+                    setClickedUser={props.setClickedUser} 
+                    setActive={props.setActive} 
+                    admin={false} 
+                    username={m}
+                />
+            );
         });
         // addToList(list);
         return list;
@@ -39,14 +62,14 @@ function RoommateListPage(props) {
     function adminFeatures() {
         if (admins.includes(user)) {
             return (
-            <div style={{backgroundColor:colors.dark2, padding: 5}}>
-                <div onClick={showModal}style={{backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
-                    <p style={{color: colors.light3, padding: 5}}>ADD ROOMMATE</p>
+                <div style={{backgroundColor:colors.dark2, padding: 5}}>
+                    <div onClick={showModal}style={{backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
+                        <p style={{color: colors.light3, padding: 5}}>ADD ROOMMATE</p>
+                    </div>
+                    <div onClick={showModal}style={{backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
+                        <p style={{color: colors.light3, padding: 5}}>EDIT HOUSE NAME</p>
+                    </div>
                 </div>
-                <div onClick={showModal}style={{backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
-                    <p style={{color: colors.light3, padding: 5}}>EDIT HOUSE NAME</p>
-                </div>
-            </div>
             );
         }
     }
