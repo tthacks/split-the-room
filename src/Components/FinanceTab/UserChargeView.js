@@ -32,7 +32,7 @@ function UserChargeView(props) {
         let reminder ={
             target: props.user,
             msg: "Don't forget to pay " + props.currentUser + " " + value + "!",
-            isVisible: true
+            deleted: false
         };
         $.post("/newnotification", reminder, function() {
             props.triggerRefresh();

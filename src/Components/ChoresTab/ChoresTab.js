@@ -5,6 +5,7 @@ import CompleteChore from './CompleteChore';
 import NewChoreModal from './NewChoreModal';
 import '../../Stylesheets/chores.css';
 import * as colors from "../../colors";
+
 function ChoresTab(props) {
 
     const [todoList, setTodoList] = useState([]);
@@ -24,7 +25,7 @@ function ChoresTab(props) {
         $.get('/fetchcompletechores')
         .done(function (response) {
             setTodoneList(response.data.map(function(d) {
-                return <CompleteChore key={d._id} item ={d} triggerRefresh={props.triggerRefresh}/>
+                return <CompleteChore key={d._id} item ={d} currentUser={props.user} triggerRefresh={props.triggerRefresh}/>
             }));
         });
         $.get('/fetchchores')

@@ -11,7 +11,14 @@ function CompleteChore(props) {
                 user: props.item.user,
             }
             $.post('/updatecompletechore', {_id: props.item._id, data: data}, function() {
+                let notification = {
+                    deleted: false, 
+                    target: props.item.user,
+                    msg: props.currentUser + " thanked you for " + props.item.name + "!"
+                }
+                $.post('/newnotification', notification, function() {
                     props.triggerRefresh();
+                });
             });
         }
 
@@ -19,7 +26,8 @@ function CompleteChore(props) {
             return null;
         }
         else {
-            return(<div className="completedChore" key={props._id}>
+            return(
+            <div className="completedChore" key={props._id}>
             <ProfilePicture user={props.item.user} />
             <p>{props.item.user + " completed: " + props.item.name}</p>
             <button onClick={celebrate}>🎉</button>
