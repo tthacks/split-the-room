@@ -40,7 +40,7 @@ function SplashScreen(props) {
             {"Password   "}
             <input type="password" value={password} onChange= {passwordHandler} />
             </div>
-            <button onClick={confirmCredentials}>Log in</button>
+            <button onClick={confirmCredentials} style={{cursor: "pointer"}}>Log in</button>
         </div>
     );
 

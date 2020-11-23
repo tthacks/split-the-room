@@ -52,12 +52,22 @@ function UserChargeView(props) {
         })
     }
 
+    function gotoAcctPage() {
+        props.setClickedUser(props.user);
+        props.setActive(4);
+        props.pageList.push(4);
+        props.addPage(props.pageList);
+        console.log(props.pageList);
+    }
+
     if(props.currentUser === props.user) {
         return null;
     }
     return(<div className="chargeview">
-        <img src={"profile_pic_"+props.user+".svg"} alt="user profile"></img>
-        <h3>{props.user}</h3>
+        {props.user != "house" && <img src={"profile_pic_"+props.user+".svg"} alt="user profile" onClick={gotoAcctPage} style={{cursor: "pointer"}}></img>}
+        {props.user === "house" && <img src={"profile_pic_"+props.user+".svg"} alt="user profile"></img>}
+        {props.user != "house" && <h3 onClick={gotoAcctPage} style={{cursor: "pointer"}}>{props.user}</h3>}
+        {props.user === "house" && <h3>{props.user}</h3>}
         {formatValue()}
         {payRemindButton()}
     </div>);

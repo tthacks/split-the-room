@@ -12,6 +12,7 @@ function RoommateAcctPage(props) {
     const pic_url = "profile_pic_"+ props.clickedUser + ".svg";
     const houseName = props.houseName;
     const bgColor = props.bgColor;
+    const active = props.active
     const [modalBGVisible, toggleBGVisiblity] = useState(false);
     const [modalPVisible, togglePVisiblity] = useState(false);
 
@@ -125,13 +126,16 @@ function RoommateAcctPage(props) {
         
     }
     function signOut() {
-        alert("TODO");
+        props.signIn(false);
+        props.setActive(0);
+        props.setPageHeader(0);
+        props.addPage([0]);
     }
 
     function addLogOut() {
         if (currUser === clickedUser) {
             return (
-                <div onClick={signOut} style={{backgroundColor: colors.dark1, width: "10%", height: 43, textAlign: "center", float: "right", position: "relative", top: 50, right: "3%"}}>
+                <div onClick={signOut} style={{cursor: "pointer", backgroundColor: colors.dark1, width: "10%", height: 43, textAlign: "center", float: "right", position: "relative", top: 50, right: "3%"}}>
                             <p style={{color: colors.light3, padding: 5, position: "relative", bottom: 10}}>LOG OUT</p>
                 </div>
             );
@@ -155,7 +159,7 @@ function RoommateAcctPage(props) {
     function addChangeBg() {
         if (currUser === clickedUser) {
             return (
-                <div onClick={showBGModal} style={{backgroundColor: colors.green, width: "20%", height: 43, textAlign: "center", float: "left", position: "relative", left: "3%", top: "5%"}}>
+                <div onClick={showBGModal} style={{cursor: "pointer", backgroundColor: colors.green, width: "20%", height: 43, textAlign: "center", float: "left", position: "relative", left: "3%", top: "5%"}}>
                     <p style={{color: colors.light3, padding: 5, position: "relative", bottom: 10}}>CHANGE BACKGROUND</p>
                 </div>
             );
@@ -182,7 +186,7 @@ function RoommateAcctPage(props) {
     function addEditPeeves() {
         if (currUser === clickedUser) {
             return (
-                <div onClick={showPModal} style={{backgroundColor: colors.green, width: "20%", height: 43, textAlign: "center", float: "right", position: "relative", right: "3%", top: "5%"}}>
+                <div onClick={showPModal} style={{cursor: "pointer", backgroundColor: colors.green, width: "20%", height: 43, textAlign: "center", float: "right", position: "relative", right: "3%", top: "5%"}}>
                     <p style={{color: colors.light3, padding: 5, position: "relative", bottom: 10}}>EDIT PET PEEVES</p>
                 </div>
             );

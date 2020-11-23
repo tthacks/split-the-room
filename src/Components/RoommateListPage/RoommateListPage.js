@@ -81,6 +81,7 @@ function RoommateListPage(props) {
 
     return(
         <div style={pageStyle}>
+            {props.setBgColor(colors.blue4)}
             {listRoommates()}
             {adminFeatures()}
             <AddRoommateModal usernames={validUsernames} showModal={modalVisible} dismissModal={showModal} refreshRoommates={props.triggerRefresh}/>

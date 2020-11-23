@@ -11,6 +11,7 @@
     margin-top: 30px;
     margin-bottom: 25px;
     flex: 1;
+    cursor: pointer; 
 }
 
 .todoitem h3 {
@@ -37,10 +38,12 @@
 
 #complete-button {
     background-color: #aebe8c;
+    cursor: pointer; 
 }
 
 #delete-button {
     background-color: #bf616a;
+    cursor: pointer; 
 }
 
 .completedChore {
@@ -56,4 +59,5 @@
     background-color: #eceff4;
     border-style: none;
     font-size: 30px;
+    cursor: pointer; 
 }

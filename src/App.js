@@ -62,24 +62,24 @@ function App() {
     if (pageHeader == 0) {
       return (
         <div>
-          <h1 onClick={gotoRoommateList} style={{color: colors.light3, display: "inline", marginTop: 0, paddingTop: 30, paddingLeft: 30, fontSize: 80}}>{houseName}</h1>
-          <h3 onClick={gotoRoommateList} style={{color: colors.light3, display: "inline", paddingLeft: 30, fontSize: 25}}>4 members</h3>
+          <h1 onClick={gotoRoommateList} style={{cursor: "pointer", color: colors.light3, display: "inline", marginTop: 0, paddingTop: 30, paddingLeft: 30, fontSize: 80}}>{houseName}</h1>
+          <h3 onClick={gotoRoommateList} style={{cursor: "pointer", color: colors.light3, display: "inline", paddingLeft: 30, fontSize: 25}}>4 members</h3>
         </div>
       );
     }
     else if (pageHeader == 1) {
       return (
         <div>
-          <h1 onClick={goBack} style={{color: colors.light3, float: "left", paddingTop: 30, paddingLeft: 30}}> &lt; Back</h1>
-          <h1 style={{color: colors.light3, margin: 0, paddingTop: 30, paddingRight: 30, textAlign: "right", fontSize: 70}}>{houseName}</h1>
-          <h3 style={{color: colors.light3, paddingRight: 30, textAlign: "right", fontSize: 25}}>4 members</h3>
+          <h1 onClick={goBack} style={{cursor: "pointer", color: colors.light3, float: "left", paddingTop: 30, paddingLeft: 30}}> &lt; Back</h1>
+          <h1 style={{cursor: "pointer", color: colors.light3, margin: 0, paddingTop: 30, paddingRight: 30, textAlign: "right", fontSize: 70}}>{houseName}</h1>
+          <h3 style={{cursor: "pointer", color: colors.light3, paddingRight: 30, textAlign: "right", fontSize: 25}}>4 members</h3>
         </div>
       );
     }
     else {
       return (
         <div>
-          <h1 onClick={goBack} style={{color: colors.light3, float: "left", paddingTop: 30, paddingLeft: 30}}> &lt; Back</h1>
+          <h1 onClick={goBack} style={{cursor: "pointer", color: colors.light3, float: "left", paddingTop: 30, paddingLeft: 30}}> &lt; Back</h1>
         </div>
       );
     }
@@ -103,11 +103,11 @@ function App() {
       {setUpHeaders()}
     <div>
       {pageHeader == 0 && <TabHeader pageList={pageList} addPage={addPage} active={currentlyActive} setActive={setActive}/>}
-      {currentlyActive === 0 && <MessageTab user={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
-      {currentlyActive === 1 && <FinanceTab user={currentUser} userList={[...validUsernames, "house"]} triggerRefresh={refreshView} refreshCounter={refresh}/>}
-      {currentlyActive === 2 && <ChoresTab user={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
-      {currentlyActive === 3 && <RoommateListPage pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} houseName={houseName} setHouseName={setHouseName} user={currentUser} admins ={adminList} usernames ={validUsernames} triggerRefresh={refreshView} refreshCounter={refresh}/>}
-      {currentlyActive === 4 && <RoommateAcctPage signIn={signIn} user={currentUser} houseName={houseName} setPageHeader={setPageHeader} clickedUser={clickedUser} bgColor={bgColor} setBgColor={setBgColor} triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 0 && <MessageTab setBgColor={setBgColor} pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} user={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 1 && <FinanceTab setBgColor={setBgColor} pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} user={currentUser} userList={[...validUsernames, "house"]} triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 2 && <ChoresTab setBgColor={setBgColor} pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} user={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 3 && <RoommateListPage setBgColor={setBgColor} pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} houseName={houseName} setHouseName={setHouseName} user={currentUser} admins ={adminList} usernames ={validUsernames} triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 4 && <RoommateAcctPage addPage={addPage} setPageHeader={setPageHeader} setActive={setActive} signIn={signIn} user={currentUser} houseName={houseName} setPageHeader={setPageHeader} clickedUser={clickedUser} bgColor={bgColor} setBgColor={setBgColor} triggerRefresh={refreshView} refreshCounter={refresh}/>}
     </div>
     </div>
     }
