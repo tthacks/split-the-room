@@ -4,12 +4,12 @@
 }
 
 .chargeview img {
-    width: 50px;
+    width: 70%;
 }
 
 .transaction {
     background-color: #eceff4;
-    width: 98%;
+    width: 95%;
     margin: 1%;
     display: inline-flex;
     justify-content: space-between;

@@ -84,12 +84,12 @@ function FinanceTab(props) {
           {debugMode &&
           <button onClick={deleteAll}>Delete all</button>}
           {props.setBgColor(colors.blue4)}
-            <div style={{marginLeft: "30%", marginRight: "30%", display: "flex", justifyContent: "space-evenly"}}>
+            <div style={{marginLeft: "25%", marginRight: "25%", display: "flex", justifyContent: "space-evenly"}}>
                 {chargeView}
             </div>
         <div>
-            <h2 style={{color: colors.dark4}}>{"Transaction History"}</h2>
-            <div style={{height: "250px", overflowY: "scroll"}}>
+            <h2 style={{paddingLeft: "5%", color: colors.dark4}}>{"Transaction History"}</h2>
+            <div style={{height: "250px", overflowY: "scroll", paddingLeft: "4%"}}>
             {transactionList}
             </div>
         </div>

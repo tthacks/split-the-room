@@ -8,10 +8,10 @@ function UserChargeView(props) {
     function formatValue() {
         const value = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(props.value);
         if(props.value < 0) {
-            return <h4 style={{color: colors.red}}>{value}</h4>
+            return <h4 style={{color: colors.red, paddingLeft: "20%"}}>{value}</h4>
         }
         else {
-            return <h4 style={{color: colors.green}}>{value}</h4>
+            return <h4 style={{color: colors.green, paddingLeft: "20%"}}>{value}</h4>
         }
     }
 
@@ -20,10 +20,10 @@ function UserChargeView(props) {
             return <button style={{visibility: "hidden"}}></button>
         }
         else if(props.value < 0) {
-            return <button onClick={payDebt}>MARK PAID</button>
+            return <button onClick={payDebt} style={{color: colors.dark4, backgroundColor: colors.light3, position: "relative", left: 15, paddingLeft: 20, paddingRight: 20, paddingTop: 5, paddingBottom: 5, fontSize: 16}}>MARK PAID</button>
         }
         else {
-        return <button onClick={remindUser}>REMIND</button>
+        return <button onClick={remindUser} style={{color: colors.dark4, backgroundColor: colors.light3, position: "relative", left: 15, paddingLeft: 20, paddingRight: 20, paddingTop: 5, paddingBottom: 5, fontSize: 16}}>REMIND</button>
         }
     }
 
@@ -66,8 +66,8 @@ function UserChargeView(props) {
     return(<div className="chargeview">
         {props.user != "house" && <img src={"profile_pic_"+props.user+".svg"} alt="user profile" onClick={gotoAcctPage} style={{cursor: "pointer"}}></img>}
         {props.user === "house" && <img src={"profile_pic_"+props.user+".svg"} alt="user profile"></img>}
-        {props.user != "house" && <h3 onClick={gotoAcctPage} style={{cursor: "pointer"}}>{props.user}</h3>}
-        {props.user === "house" && <h3>{props.user}</h3>}
+        {props.user != "house" && <h3 onClick={gotoAcctPage} style={{cursor: "pointer", paddingLeft: "20%"}}>{props.user}</h3>}
+        {props.user === "house" && <h3 style={{paddingLeft: "20%"}}>{props.user}</h3>}
         {formatValue()}
         {payRemindButton()}
     </div>);
