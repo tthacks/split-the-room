@@ -26,9 +26,8 @@ function CompleteChore(props) {
             return null;
         }
         else {
-            return(
-            <div className="completedChore" key={props._id}>
-            <ProfilePicture user={props.item.user} />
+            return(<div className="completedChore" key={props._id}>
+            <ProfilePicture pageList={props.pageList} addPage={props.addPage} setClickedUser={props.setClickedUser} setActive={props.setActive} user={props.item.user} />
             <p>{props.item.user + " completed: " + props.item.name}</p>
             <button onClick={celebrate}>🎉</button>
     </div>);

@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import $ from 'jquery';
 import * as colors from '../../colors';
+import ChangeBgModal from './ChangeBgModal';
+import EditPetPeevesModal from './EditPetPeevesModal';
 import Slider from '@material-ui/core/Slider';
 
 function RoommateAcctPage(props) {
 
-    const username = props.clickedUser;
+    const currUser = props.user;
+    const clickedUser = props.clickedUser;
     const pic_url = "profile_pic_"+ props.clickedUser + ".svg";
     const houseName = props.houseName;
+    const bgColor = props.bgColor;
+    const active = props.active
+    const [modalBGVisible, toggleBGVisiblity] = useState(false);
+    const [modalPVisible, togglePVisiblity] = useState(false);
 
     const houseNameBox = {
         backgroundColor: colors.green,
@@ -25,9 +32,18 @@ function RoommateAcctPage(props) {
 
     const peevesBox = {
         backgroundColor: colors.light3,
-        marginLeft: "25%",
-        marginRight: "25%",
-        padding: "2%"
+        width: "44%",
+        padding: "2%",
+        float: "left", 
+        marginLeft: "6%"
+    };
+
+    const peevesBox2 = {
+        backgroundColor: colors.light3,
+        width: "44%",
+        padding: "2%",
+        float: "left", 
+        marginLeft: "26%"
     };
 
     const marks = [
@@ -73,24 +89,117 @@ function RoommateAcctPage(props) {
         },
       ];
       
-      function valuetext(value) {
-        return `${value}°C`;
-      }
-      
-      function valueLabelFormat(value) {
+    function valueLabelFormat(value) {
         return marks.findIndex((mark) => mark.value === value) + 1;
-      }
+    }
 
-    // function changeBg() {
-    //     props.setBgColor(colors.red)
-    //     console.log("red");
-    // }
+    function addSliders() {
+        if (currUser === clickedUser) {
+            return (
+                <Slider
+                    style={{marginLeft: "15%", width: "66%"}}
+                    max={90}
+                    defaultValue={40}
+                    valueLabelFormat={valueLabelFormat}
+                    aria-labelledby="discrete-slider-restrict"
+                    step={null}
+                    valueLabelDisplay="auto"
+                    marks={marks}
+                />
+            );
+        }
+        else {
+            return (
+                <Slider
+                    style={{marginLeft: "15%", width: "66%"}}
+                    max={90}
+                    defaultValue={40}
+                    valueLabelFormat={valueLabelFormat}
+                    aria-labelledby="discrete-slider-restrict"
+                    step={null}
+                    valueLabelDisplay="auto"
+                    marks={marks}
+                    disabled
+                />
+            );
+        }
+        
+    }
+    function signOut() {
+        props.signIn(false);
+        props.setActive(0);
+        props.setPageHeader(0);
+        props.addPage([0]);
+    }
+
+    function addLogOut() {
+        if (currUser === clickedUser) {
+            return (
+                <div onClick={signOut} style={{cursor: "pointer", backgroundColor: colors.dark1, width: "10%", height: 43, textAlign: "center", float: "right", position: "relative", top: 50, right: "3%"}}>
+                            <p style={{color: colors.light3, padding: 5, position: "relative", bottom: 10}}>LOG OUT</p>
+                </div>
+            );
+        }
+    }
+
+
+
+    function showBGModal() {
+        toggleBGVisiblity(!modalBGVisible);
+    }
+
+    function showPModal() {
+        togglePVisiblity(!modalPVisible);
+    }
+
+    function updateBg() {
+        return props.setBgColor(colors.purple);
+    }
+
+    function addChangeBg() {
+        if (currUser === clickedUser) {
+            return (
+                <div onClick={showBGModal} style={{cursor: "pointer", backgroundColor: colors.green, width: "20%", height: 43, textAlign: "center", float: "left", position: "relative", left: "3%", top: "5%"}}>
+                    <p style={{color: colors.light3, padding: 5, position: "relative", bottom: 10}}>CHANGE BACKGROUND</p>
+                </div>
+            );
+        }
+    }
+
+    function addPetPeeves() {
+        if (currUser === clickedUser) {
+            return (
+                <div style={peevesBox}>
+                        <text> TODO </text>
+                </div>  
+            );
+        }
+        else {
+            return (
+                <div style={peevesBox2}>
+                        <text> TODO </text>
+                </div>  
+            );
+        }
+    }
+
+    function addEditPeeves() {
+        if (currUser === clickedUser) {
+            return (
+                <div onClick={showPModal} style={{cursor: "pointer", backgroundColor: colors.green, width: "20%", height: 43, textAlign: "center", float: "right", position: "relative", right: "3%", top: "5%"}}>
+                    <p style={{color: colors.light3, padding: 5, position: "relative", bottom: 10}}>EDIT PET PEEVES</p>
+                </div>
+            );
+        }
+    }
 
     return(
         <div>
             {props.setPageHeader(2)}
-            <img src={pic_url} alt={username + "'s profile picture"} style={{display: "block", marginLeft: "44%", marginRight: "50%", width: "12%", paddingTop: 50}}></img> 
-            <h1 style={{color: colors.light3, display: "block", textAlign: "center", fontSize: 40, marginTop: 0}}>{username}</h1>
+            {updateBg()}
+            <img src={pic_url} alt={clickedUser + "'s profile picture"} style={{marginLeft: "34%", width: "12%", paddingTop: 50}}></img> 
+            {addLogOut()}
+            <h1 style={{color: colors.light3, display: "block", textAlign: "center", fontSize: 40, marginTop: 0}}>{clickedUser}</h1>
             <div style={bodyBox}>
                 
                 <div style={houseNameBox}>
@@ -99,41 +208,25 @@ function RoommateAcctPage(props) {
                 <div>
                     <text id="discrete-slider-restrict" style={{fontSize: 20, marginLeft: "15%", width: "10%", display: "inline"}}>Messy</text>
                     <text id="discrete-slider-restrict" style={{fontSize: 20, marginLeft: "58%", marginRight: 20, display: "inline"}}>Tidy</text>
-                    <Slider
-                        style={{marginLeft: "15%", width: "72%"}}
-                        defaultValue={20}
-                        valueLabelFormat={valueLabelFormat}
-                        getAriaValueText={valuetext}
-                        aria-labelledby="discrete-slider-restrict"
-                        step={null}
-                        valueLabelDisplay="auto"
-                        marks={marks}
-                    />
+                    {addSliders()}
                 </div>
                 <div style={{paddingTop: 30, paddingBottom: 30}}>
                     <text id="discrete-slider-restrict" style={{fontSize: 20, marginLeft: "15%", width: "10%", display: "inline"}}>Quiet</text>
                     <text id="discrete-slider-restrict" style={{fontSize: 20, marginLeft: "58%", marginRight: 20, display: "inline"}}>Loud</text>
-                    <Slider
-                        style={{marginLeft: "15%", width: "72%"}}
-                        defaultValue={20}
-                        valueLabelFormat={valueLabelFormat}
-                        getAriaValueText={valuetext}
-                        aria-labelledby="discrete-slider-restrict"
-                        step={null}
-                        valueLabelDisplay="auto"
-                        marks={marks}
-                    />
+                    {addSliders()}
                 </div>
-                <div>
-                    <text style={{fontSize: 20, marginLeft: "46%"}}>Pet Peeves</text>
-                    <div style={peevesBox}>
-                        <text> test </text>
-                    </div>
+                <text style={{fontSize: 20, marginLeft: "46%"}}>Pet Peeves</text>
+                <div style={{overflow: "hidden"}}>
+                    
+                    {addChangeBg()}
+                    {addPetPeeves()}
+                    {addEditPeeves()}
                 </div>
 
 
             </div>
-            
+            <ChangeBgModal user={currUser} showModal={modalBGVisible} dismissModal={showBGModal} refreshMessages={props.triggerRefresh}/>
+            <EditPetPeevesModal user={currUser} showModal={modalPVisible} dismissModal={showPModal} refreshMessages={props.triggerRefresh}/>
         </div>
     );
 

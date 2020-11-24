@@ -43,14 +43,16 @@ return(
     <div>
         {props.showModal && <div className="modal" id="messageModal">
         <div className="modal-content">
-        <h3 onClick={dismissModal}>X</h3>
-            <h2>New Message</h2>
-            <textarea onChange={messageHandler} placeholder="Type message here..."></textarea>
-            <div className="check-urgent">
-            Mark urgent
-            <input type="checkbox" onChange={isUrgentHandler}></input> 
-            </div>
-            <button onClick={submit}>Submit</button>
+            <h3 onClick={dismissModal}>X</h3>
+                <h2>New Message</h2>
+                <textarea onChange={messageHandler} style={{fontFamily: "arial", fontSize: 23}} placeholder="Type message here..."></textarea>
+                <div className="check-urgent" style={{padding: 10}}>
+                    <text style={{paddingRight: 25}}>Mark urgent</text>
+                    <input type="checkbox" onChange={isUrgentHandler} style={{width: 20, height: 20, position: "relative", top: 3}}></input> 
+                </div>
+                <div style={{display: "flex", justifyContent: "center", paddingTop: 25}}>
+                    <button onClick={submit} style={{paddingLeft: 20, paddingRight: 20, paddingTop: 5, paddingBottom: 5, fontSize: 16}}>SUBMIT</button>
+                </div>
         </div>
         </div>}
     </div>

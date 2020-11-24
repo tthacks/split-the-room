@@ -43,7 +43,7 @@ function MessageTab(props) {
         else {
           const d = obj.data.reverse();
         setMessages(d.map(function (m) {
-                      return (<Message key={m._id} _id={m._id} author={m.author} msg={m.msg} important={m.important}/>)
+                      return (<Message key={m._id} _id={m._id} author={m.author} msg={m.msg} important={m.important} pageList={props.pageList} addPage={props.addPage} setClickedUser={props.setClickedUser} setActive={props.setActive}/>)
         }));
     }
       })
@@ -56,13 +56,14 @@ function MessageTab(props) {
         <div style={pageStyle}>
           {debugMode &&
           <button onClick={deleteAll}>Delete all</button>}
+          {props.setBgColor(colors.blue4)}
           <div style={{padding: 16, height: 400, overflowY: "scroll"}}>
             {renderEmpty()}
             {messages}
           </div>
         <div style={{backgroundColor:colors.dark2, padding: 5}}>
             <div onClick={showModal} style={{backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
-                <p style={{color: colors.light3, padding: 5}}>NEW POST</p>
+                <p style={{cursor: "pointer", color: colors.light3, padding: 5}}>NEW POST</p>
             </div>
         </div>
         <NewMessageModal user={props.user} showModal={modalVisible} dismissModal={showModal} refreshMessages={props.triggerRefresh}/>

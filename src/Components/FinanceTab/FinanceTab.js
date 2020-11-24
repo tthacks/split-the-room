@@ -50,7 +50,7 @@ function FinanceTab(props) {
             debt_list.push({key: x, user: userList[x], value: outstandingDebt[x]})
         }
         setChargeView(debt_list.map(function(d) {
-            return <UserChargeView key={d._id} currentUser={props.user} user={d.user} value={d.value} triggerRefresh={props.triggerRefresh}/>;
+            return <UserChargeView key={d._id} currentUser={props.user} user={d.user} value={d.value} triggerRefresh={props.triggerRefresh} pageList={props.pageList} addPage={props.addPage} setClickedUser={props.setClickedUser} setActive={props.setActive} />;
         }));
     }
 
@@ -83,18 +83,19 @@ function FinanceTab(props) {
         <div style={pageStyle}>
           {debugMode &&
           <button onClick={deleteAll}>Delete all</button>}
-            <div style={{marginLeft: "30%", marginRight: "30%", display: "flex", justifyContent: "space-evenly"}}>
+          {props.setBgColor(colors.blue4)}
+            <div style={{marginLeft: "25%", marginRight: "25%", display: "flex", justifyContent: "space-evenly"}}>
                 {chargeView}
             </div>
         <div>
-            <h2 style={{color: colors.dark4}}>{"Transaction History"}</h2>
-            <div style={{height: "250px", overflowY: "scroll"}}>
+            <h2 style={{paddingLeft: "5%", color: colors.dark4}}>{"Transaction History"}</h2>
+            <div style={{height: "250px", overflowY: "scroll", paddingLeft: "4%"}}>
             {transactionList}
             </div>
         </div>
     
       <div style={{backgroundColor:colors.dark2, padding: 5}}>
-          <div onClick={showModal} style={{backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
+          <div onClick={showModal} style={{cursor: "pointer", backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
               <p style={{color: colors.light3, padding: 5}}>{"NEW CHARGE"}</p>
           </div>
       </div>

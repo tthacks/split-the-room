@@ -25,7 +25,7 @@ function ChoresTab(props) {
         $.get('/fetchcompletechores')
         .done(function (response) {
             setTodoneList(response.data.map(function(d) {
-                return <CompleteChore key={d._id} item ={d} currentUser={props.user} triggerRefresh={props.triggerRefresh}/>
+                return <CompleteChore key={d._id} item ={d} currentUser={props.user} triggerRefresh={props.triggerRefresh} pageList={props.pageList} addPage={props.addPage} setClickedUser={props.setClickedUser} setActive={props.setActive} />
             }));
         });
         $.get('/fetchchores')
@@ -57,13 +57,14 @@ function ChoresTab(props) {
 
     return(
         <div style={pageStyle}>
+            {props.setBgColor(colors.blue4)}
             <div style={{display: "inline-flex", padding: 16}}>
                 <div style={{flex: 1}}>
                     {todoList}
                 </div>
                 <div style={{flex: 1}}>
                     {debugMode && <button onClick={deleteCompleteChores}>{"Delete Complete Chores"}</button>}
-                    <h2>{"To Done List"}</h2>
+                    <h2 style={{textAlign: "center", verticalAlign: "center"}}>{"To Done List"}</h2>
                     <div style={{height: "280px", overflowY: "scroll"}}>
                         {renderEmpty()}
                         {todoneList}
@@ -71,7 +72,7 @@ function ChoresTab(props) {
                 </div>
             </div>
             <div style={{backgroundColor:colors.dark2, padding: 5}}>
-                <div onClick={showModal} style={{backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
+                <div onClick={showModal} style={{cursor: "pointer", backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
                     <p style={{color: colors.light3, padding: 5}}>{"NEW CHORE"}</p>
                 </div>
             </div>

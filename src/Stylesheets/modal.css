@@ -47,3 +47,23 @@
       background-color: #aebe8c;
       color: #eceff4;
   }
+
+  .modal-content input {
+        background-color: #d8dee9;
+        font-size: 125%;
+  }
+
+  .modal-content text {
+        color: #2e3440;
+  }
+
+  .modal-input {
+      margin-bottom: 20;
+  }
+
+  .modal-content ul {
+      margin: 0;
+      display: inline-block;
+      vertical-align: middle;
+      padding-left: 19%;
+  }

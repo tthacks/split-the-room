@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import $ from 'jquery';
+import '../../Stylesheets/modal.css';
+
 
 function NewChoreModal(props) {
     const [name, setName] = useState("");
