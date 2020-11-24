@@ -49,7 +49,7 @@ function ChoresTab(props) {
     }
 
     function renderEmpty() {
-        if(todoList.length == 0) {
+        if(todoList.length === 0) {
             return(<div className="completedChore" style={{hidden: true}}>
             </div>)
         }

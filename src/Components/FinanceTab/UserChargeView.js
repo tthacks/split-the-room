@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import $ from 'jquery';
 import * as colors from '../../colors';
 import '../../Stylesheets/finances.css';
 
 function UserChargeView(props) {
+
+    const [remindVisible, removeButton] = useState(true);
 
     function formatValue() {
         const value = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(props.value);
@@ -23,7 +25,7 @@ function UserChargeView(props) {
             return <button onClick={payDebt}>MARK PAID</button>
         }
         else {
-        return <button onClick={remindUser}>REMIND</button>
+        return <>{remindVisible && <button onClick={remindUser}>REMIND</button>}</>;
         }
     }
 
@@ -35,6 +37,7 @@ function UserChargeView(props) {
             deleted: false
         };
         $.post("/newnotification", reminder, function() {
+            removeButton(false);
             props.triggerRefresh();
         })
     }

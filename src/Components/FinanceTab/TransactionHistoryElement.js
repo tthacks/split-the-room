@@ -13,16 +13,29 @@ function TransactionHistoryElement(props) {
     function formatMessage() {
         if(props.isComplete === "true") {
             if(props.user1 === props.user) {
-                return <h4 style={{alignSelf: "end"}}>{props.user2} paid you</h4>;
+                return <h4 style={{alignSelf: "end"}}>{props.user2} paid you back</h4>;
             }
-            return <h4 className="message">You paid {props.user1}</h4>;
+            return <h4 className="message">You paid {props.user1} back</h4>;
 
         }
         else {
             if(props.user1 === props.user) {
-                return <h4 style={{alignSelf: "end"}}>{props.user2} charged you</h4>;
+                if(props.memo === ""){
+                return <h4 style={{alignSelf: "end"}}>{props.user2} charged you </h4>;
+                }
+                else {
+                    return <h4 style={{alignSelf: "end"}}>{props.user2} charged you for {props.memo}</h4>;
+                
+                }
             }
+            else {
+                if(props.memo === "") {
             return <h4 className="message">You charged {props.user1}</h4>;
+                }
+                else {
+                    return <h4 className="message">You charged {props.user1} for {props.memo}</h4>
+                }
+            }
         }
 
     }

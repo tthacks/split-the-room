@@ -63,11 +63,11 @@ function FinanceTab(props) {
             //filter out the ones that don't pertain to us
             let h = history[i];
             if(h.user1 === props.user) { //we owe user2 money
-                    t.push(<TransactionHistoryElement user={props.user} user1={h.user1} user2={h.user2} value={h.value} isComplete={h.isComplete} dateCompleted={h.dateCompleted}/>);
+                    t.push(<TransactionHistoryElement user={props.user} user1={h.user1} user2={h.user2} memo={h.memo} value={h.value} isComplete={h.isComplete} dateCompleted={h.dateCompleted}/>);
                     outstandingDebt[userList.indexOf(h.user2)] = Number(outstandingDebt[userList.indexOf(h.user2)]) - Number(h.value);
             }
             else if(h.user2 === props.user) { //user1 owes us money
-                t.push(<TransactionHistoryElement user={props.user} user1={h.user1} user2={h.user2} value={h.value} isComplete={h.isComplete} dateCompleted={h.dateCompleted}/>);
+                t.push(<TransactionHistoryElement user={props.user} user1={h.user1} user2={h.user2} memo={h.memo} value={h.value} isComplete={h.isComplete} dateCompleted={h.dateCompleted}/>);
                     outstandingDebt[userList.indexOf(h.user1)] = Number(outstandingDebt[userList.indexOf(h.user1)]) + Number(h.value);
             }
         }

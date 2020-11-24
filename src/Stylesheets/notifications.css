@@ -1,0 +1,14 @@
+.notificationBox .notificationText {
+    background-color: #b48ead;
+    padding: 15px;
+    color: white;
+    border-bottom: white solid 3px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.notificationBox .notificationText button {
+    background-color: #b48ead;
+    color: white;
+    border: none;
+}

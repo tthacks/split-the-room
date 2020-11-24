@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import $ from 'jquery';
 import * as colors from '../../colors';
+import '../../Stylesheets/notifications.css';
 
 function NotificationBar(props) {
 
@@ -14,9 +15,9 @@ function NotificationBar(props) {
           setNotifications(obj.data.filter(function(m) {
             return m.target === props.user
           }).map(function (m) {
-            return (<div>
+            return (<div className="notificationBox">
               {m.deleted === "false" && 
-                <div style={{backgroundColor: colors.orange, padding: 30}}>
+                <div className="notificationText">
                          {m.msg}
                 <button id={m._id} onClick={deleteNotification}>X</button>
                 </div>}
