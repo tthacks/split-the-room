@@ -11,7 +11,14 @@ function CompleteChore(props) {
                 user: props.item.user,
             }
             $.post('/updatecompletechore', {_id: props.item._id, data: data}, function() {
+                let notification = {
+                    deleted: false, 
+                    target: props.item.user,
+                    msg: props.currentUser + " thanked you for " + props.item.name + "!"
+                }
+                $.post('/newnotification', notification, function() {
                     props.triggerRefresh();
+                });
             });
         }
 

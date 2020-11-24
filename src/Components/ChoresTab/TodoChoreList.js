@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import $ from 'jquery';
 import "../../Stylesheets/chores.css";
+import * as colors from "../../colors";
 
 function TodoChoreList(props) {
 
     const [displayedList, setDisplayedList] = useState([]);
     const [selectedItems, setSelectedItems] = useState([]);
-
     useEffect(renderDisplayedList, [props.list, props.user, props.triggerRefresh]);
+
+    const confettiColors = [
+        colors.red, 
+        colors.orange, 
+        colors.purple,
+        colors.green,
+        colors.blue1,
+    ];
 
     function addToCheckedList(e) {
         if(e.target.checked) {

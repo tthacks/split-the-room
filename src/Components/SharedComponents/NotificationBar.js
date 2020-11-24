@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import $ from 'jquery';
-import * as colors from '../../colors';
+import '../../Stylesheets/notifications.css';
 
 function NotificationBar(props) {
 
@@ -14,10 +14,12 @@ function NotificationBar(props) {
           setNotifications(obj.data.filter(function(m) {
             return m.target === props.user
           }).map(function (m) {
-            return (<div>
-                <div style={{backgroundColor: colors.orange}}>
+            return (<div className="notificationBox">
+              {m.deleted === "false" && 
+                <div className="notificationText">
                          {m.msg}
-                </div>
+                <button id={m._id} onClick={deleteNotification}>X</button>
+                </div>}
             </div>)
       }))})
         .fail(function (obj) {
@@ -25,7 +27,17 @@ function NotificationBar(props) {
         });
       }
 
-  function deleteNotifications() {
+      function deleteNotification(e) {
+          let data={
+            _id: e.target.id,
+            deleted: true
+          }
+          $.post('/deletenotification', data, function() {
+            props.triggerRefresh();
+          })
+      }
+
+  function deleteAll() {
     $.post('/deleteNotifications')
     .done(function(obj) {
       props.triggerRefresh();
@@ -35,10 +47,7 @@ function NotificationBar(props) {
     return(
         <div>
             {notifications}
-            <div style={{backgroundColor: colors.blue4}}>
-      {notifications.length !== 0 && <button onClick={deleteNotifications}>Delete Notifications</button>}
       </div>
-        </div>
     );
 
 }
