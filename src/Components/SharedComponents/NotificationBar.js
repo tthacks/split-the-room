@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import $ from 'jquery';
-import * as colors from '../../colors';
 import '../../Stylesheets/notifications.css';
 
 function NotificationBar(props) {
