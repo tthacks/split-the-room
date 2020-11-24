@@ -63,7 +63,7 @@ function ChoresTab(props) {
                 </div>
                 <div style={{flex: 1}}>
                     {debugMode && <button onClick={deleteCompleteChores}>{"Delete Complete Chores"}</button>}
-                    <h2>{"To Done List"}</h2>
+                    <h2 style={{textAlign: "center", verticalAlign: "center"}}>{"To Done List"}</h2>
                     <div style={{height: "280px", overflowY: "scroll"}}>
                         {renderEmpty()}
                         {todoneList}

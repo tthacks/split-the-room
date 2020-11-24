@@ -12,17 +12,23 @@
     margin-bottom: 25px;
     flex: 1;
     cursor: pointer; 
+    width: 40px;
+    height: 40px;
 }
 
 .todoitem h3 {
     padding-left: 25px;
     flex: 4;
     padding-right: 25px;
+    text-align: center;
+    vertical-align: center;
 }
 
 .todoitem p {
     margin-top: 20px;
     flex: 2;
+    text-align: center;
+    vertical-align: center;
 }
 
 .markCompleteDelete {
@@ -33,7 +39,8 @@
     border-style: none;
     color: #eceff4;
     padding: 10px;
-    margin: 5px;
+    margin-left: 17%;
+    margin-top: 2%;
 }
 
 #complete-button {

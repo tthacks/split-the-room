@@ -80,7 +80,7 @@ function TodoChoreList(props) {
 }
 
     return(<div>
-            <h2>{"To Do List"}</h2>
+            <h2 style={{textAlign: "center", verticalAlign: "center"}}>{"To Do List"}</h2>
         <div style={{height: "280px", width: "100%", overflowY: "scroll"}}>
         {displayedList}
         </div>
