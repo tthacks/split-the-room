@@ -64,10 +64,10 @@ function RoommateListPage(props) {
             return (
                 <div style={{backgroundColor:colors.dark2, padding: 5}}>
                     <div onClick={showModal}style={{backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
-                        <p style={{color: colors.light3, padding: 5}}>ADD ROOMMATE</p>
+                        <p style={{cursor: "pointer", color: colors.light3, padding: 5}}>ADD ROOMMATE</p>
                     </div>
                     <div onClick={showModal}style={{backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
-                        <p style={{color: colors.light3, padding: 5}}>EDIT HOUSE NAME</p>
+                        <p style={{cursor: "pointer", color: colors.light3, padding: 5}}>EDIT HOUSE NAME</p>
                     </div>
                 </div>
             );

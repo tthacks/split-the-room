@@ -23,6 +23,10 @@ function App() {
   const [bgColor, setBgColor] = useState(colors.blue4);
   const [clickedUser, setClickedUser] = useState("");
   const [pageList, addPage] = useState([0]);
+  // Arrays to store each account's pet peeves and background colors
+  // 0 = red, 1 = yellow, 2 = green
+  const [petPeeves, editPeeves] = useState(["No pet peeves set.", "No pet peeves set.", "No pet peeves set."]);
+  const [acctBgs, editAcctBgs] = useState(["red", "yellow", "green"]);
 
   const validUsernames = ["red", "yellow", "green"];
   const validPasswords = ["red", "yellow", "green"];
@@ -107,7 +111,7 @@ function App() {
       {currentlyActive === 1 && <FinanceTab setBgColor={setBgColor} pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} user={currentUser} userList={[...validUsernames, "house"]} triggerRefresh={refreshView} refreshCounter={refresh}/>}
       {currentlyActive === 2 && <ChoresTab setBgColor={setBgColor} pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} user={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
       {currentlyActive === 3 && <RoommateListPage setBgColor={setBgColor} pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} houseName={houseName} setHouseName={setHouseName} user={currentUser} admins ={adminList} usernames ={validUsernames} triggerRefresh={refreshView} refreshCounter={refresh}/>}
-      {currentlyActive === 4 && <RoommateAcctPage addPage={addPage} setPageHeader={setPageHeader} setActive={setActive} signIn={signIn} user={currentUser} houseName={houseName} setPageHeader={setPageHeader} clickedUser={clickedUser} bgColor={bgColor} setBgColor={setBgColor} triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 4 && <RoommateAcctPage acctBgs={acctBgs} editAcctBgs={editAcctBgs} petPeeves={petPeeves} editPeeves={editPeeves} addPage={addPage} setPageHeader={setPageHeader} setActive={setActive} signIn={signIn} user={currentUser} houseName={houseName} setPageHeader={setPageHeader} clickedUser={clickedUser} bgColor={bgColor} setBgColor={setBgColor} triggerRefresh={refreshView} refreshCounter={refresh}/>}
     </div>
     </div>
     }

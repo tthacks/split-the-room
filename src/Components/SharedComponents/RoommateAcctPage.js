@@ -13,8 +13,12 @@ function RoommateAcctPage(props) {
     const houseName = props.houseName;
     const bgColor = props.bgColor;
     const active = props.active
+    const petPeeves = props.petPeeves;
+    const acctBgs = props.acctBgs;
     const [modalBGVisible, toggleBGVisiblity] = useState(false);
     const [modalPVisible, togglePVisiblity] = useState(false);
+    
+    
 
     const houseNameBox = {
         backgroundColor: colors.green,
@@ -153,7 +157,32 @@ function RoommateAcctPage(props) {
     }
 
     function updateBg() {
-        return props.setBgColor(colors.purple);
+        let newColor = acctBgs[0];
+        if (clickedUser === "yellow") {
+            newColor = acctBgs[1];
+        }
+        else if (clickedUser === "green") {
+            newColor = acctBgs[2];
+        }
+
+        if (newColor === "red") {
+            return props.setBgColor(colors.red);
+        }
+        else if (newColor === "orange") {
+            return props.setBgColor(colors.orange);
+        }
+        else if (newColor === "yellow") {
+            return props.setBgColor(colors.yellow);
+        }
+        else if (newColor === "green") {
+            return props.setBgColor(colors.green);
+        }
+        else if (newColor === "blue") {
+            return props.setBgColor(colors.blue4);
+        }
+        else if (newColor === "purple") {
+            return props.setBgColor(colors.purple);
+        }
     }
 
     function addChangeBg() {
@@ -167,17 +196,31 @@ function RoommateAcctPage(props) {
     }
 
     function addPetPeeves() {
+        let currPeeve = "";
+        if (clickedUser === "red") {
+            currPeeve = petPeeves[0];
+            console.log("red's peeves");
+        }
+        else if (clickedUser === "yellow") {
+            currPeeve = petPeeves[1];
+            console.log("yellow's peeves");
+        }
+        else {
+            currPeeve = petPeeves[2];
+            console.log("green's peeves");
+        }
+
         if (currUser === clickedUser) {
             return (
                 <div style={peevesBox}>
-                        <text> TODO </text>
+                        <text>{currPeeve}</text>
                 </div>  
             );
         }
         else {
             return (
                 <div style={peevesBox2}>
-                        <text> TODO </text>
+                        <text>{currPeeve}</text>
                 </div>  
             );
         }
@@ -196,6 +239,7 @@ function RoommateAcctPage(props) {
     return(
         <div>
             {props.setPageHeader(2)}
+            {console.log(petPeeves)}
             {updateBg()}
             <img src={pic_url} alt={clickedUser + "'s profile picture"} style={{marginLeft: "34%", width: "12%", paddingTop: 50}}></img> 
             {addLogOut()}
@@ -225,8 +269,8 @@ function RoommateAcctPage(props) {
 
 
             </div>
-            <ChangeBgModal user={currUser} showModal={modalBGVisible} dismissModal={showBGModal} refreshMessages={props.triggerRefresh}/>
-            <EditPetPeevesModal user={currUser} showModal={modalPVisible} dismissModal={showPModal} refreshMessages={props.triggerRefresh}/>
+            <ChangeBgModal setBgColor={props.setBgColor} acctBgs={acctBgs} editAcctBgs={props.editAcctBgs} user={currUser} showModal={modalBGVisible} dismissModal={showBGModal} refreshMessages={props.triggerRefresh}/>
+            <EditPetPeevesModal petPeeves={petPeeves} editPeeves={props.editPeeves} user={currUser} showModal={modalPVisible} dismissModal={showPModal} refreshMessages={props.triggerRefresh}/>
         </div>
     );
 

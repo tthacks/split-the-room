@@ -44,14 +44,19 @@ return(
     <div>
         {props.showModal && <div className="modal" id="messageModal">
         <div className="modal-content">
-        <h3 onClick={dismissModal}>X</h3>
+            <h3 onClick={dismissModal}>X</h3>
             <h2>{"New Chore"}</h2>
-            <input type="text" onChange={choreNameHandler}></input>
-            <div className="check-chore">
-            {"Chore repeats"}
-            <input type="checkbox" onChange={isRecurringHandler}></input> 
+            <div style={{paddingLeft: "10%"}}>
+                <text style={{paddingRight: "10%"}}>Chore Name</text>
+                <input type="text" onChange={choreNameHandler}></input>
+                <div className="check-chore">
+                <text style={{paddingRight: "8%"}}>Chore repeats</text>
+                <input type="checkbox" onChange={isRecurringHandler} style={{width: 20, height: 20}}></input> 
+                </div>
             </div>
-            <button onClick={submit}>{"Submit"}</button>
+            <div style={{display: "flex", justifyContent: "center", paddingTop: 25}}>
+                <button onClick={submit} style={{paddingLeft: 20, paddingRight: 20, paddingTop: 5, paddingBottom: 5, fontSize: 16}}>SUBMIT</button>
+            </div>
         </div>
         </div>}
     </div>
