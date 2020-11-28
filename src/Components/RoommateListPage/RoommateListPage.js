@@ -64,9 +64,6 @@ function RoommateListPage(props) {
             return (
                 <div style={{backgroundColor:colors.dark2, padding: 5}}>
                     <div onClick={showModal}style={{backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
-                        <p style={{cursor: "pointer", color: colors.light3, padding: 5}}>ADD ROOMMATE</p>
-                    </div>
-                    <div onClick={showModal}style={{backgroundColor: colors.green, width: "20%", textAlign: "center", marginLeft: "40%"}}>
                         <p style={{cursor: "pointer", color: colors.light3, padding: 5}}>EDIT HOUSE NAME</p>
                     </div>
                 </div>
@@ -84,7 +81,6 @@ function RoommateListPage(props) {
             {props.setBgColor(colors.blue4)}
             {listRoommates()}
             {adminFeatures()}
-            <AddRoommateModal usernames={validUsernames} showModal={modalVisible} dismissModal={showModal} refreshRoommates={props.triggerRefresh}/>
             <ChangeHouse houseName={houseName} setHouseName={props.setHouseName} showModal={modalVisible} dismissModal={showModal} refreshRoommates={props.triggerRefresh}/>
         </div>
     );
