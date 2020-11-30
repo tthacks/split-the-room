@@ -39,7 +39,6 @@ function ChangeBgModal(props) {
             return;
         }
 
-        alert("New background color is " + newColor);
         if (newColor === "red") {
             props.setBgColor(colors.red);
         }

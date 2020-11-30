@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import RoommateAcctEntry from './RoommateAcctEntry';
-import $ from 'jquery';
 import * as colors from '../../colors';
 import ChangeHouse from './ChangeHouse';
 
@@ -35,6 +34,7 @@ function RoommateListPage(props) {
                         setActive={props.setActive} 
                         admin={true} 
                         username={m}
+                        currentUser={props.currentUser}
                     />
                 );
             }
@@ -48,6 +48,7 @@ function RoommateListPage(props) {
                     setActive={props.setActive} 
                     admin={false} 
                     username={m}
+                    currentUser={props.currentUser}
                 />
             );
         });

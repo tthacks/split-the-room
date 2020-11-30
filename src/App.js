@@ -9,6 +9,7 @@ import RoommateAcctPage from './Components/SharedComponents/RoommateAcctPage';
 
 import * as colors from './colors';
 import NotificationBar from './Components/SharedComponents/NotificationBar';
+import ProfilePicture from './Components/SharedComponents/ProfilePicture';
 
 function App() {
 
@@ -49,7 +50,7 @@ function App() {
   }
 
   function goBack() {
-    let curr = pageList.pop();
+    pageList.pop();
     let prev = pageList.pop();
     pageList.push(prev);
     console.log(pageList);
@@ -63,15 +64,18 @@ function App() {
   }
 
   function setUpHeaders() {
-    if (pageHeader == 0) {
+    if (pageHeader === 0) {
       return (
         <div>
+          <div style={{float: "right", marginTop: "15px", marginRight: "15px"}}>
+          <ProfilePicture pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} user={currentUser} />
+            </div>
           <h1 onClick={gotoRoommateList} style={{cursor: "pointer", color: colors.light3, display: "inline", marginTop: 0, paddingTop: 30, paddingLeft: 30, fontSize: 80}}>{houseName}</h1>
           <h3 onClick={gotoRoommateList} style={{cursor: "pointer", color: colors.light3, display: "inline", paddingLeft: 30, fontSize: 25}}>{validUsernames.length} members</h3>
         </div>
       );
     }
-    else if (pageHeader == 1) {
+    else if (pageHeader === 1) {
       return (
         <div>
           <h1 onClick={goBack} style={{cursor: "pointer", color: colors.light3, float: "left", paddingTop: 30, paddingLeft: 30}}> &lt; Back</h1>
@@ -89,16 +93,6 @@ function App() {
     }
   }
 
-  // function updateBgColor() {
-  //   if (currentlyActive === 4) {
-  //     setBgColor(colors.red);
-  //   }
-  //   else {
-  //     setBgColor(colors.blue4);
-  //   }
-  // }
-
-
   return (
     <div>
     <NotificationBar user={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>
@@ -106,12 +100,12 @@ function App() {
       {isSignedIn && <div style={{backgroundColor: bgColor, height: "100vh", width: "100vw"}}>
       {setUpHeaders()}
     <div>
-      {pageHeader == 0 && <TabHeader pageList={pageList} addPage={addPage} active={currentlyActive} setActive={setActive}/>}
+      {pageHeader === 0 && <TabHeader pageList={pageList} addPage={addPage} active={currentlyActive} setActive={setActive}/>}
       {currentlyActive === 0 && <MessageTab setBgColor={setBgColor} pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} user={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
       {currentlyActive === 1 && <FinanceTab setBgColor={setBgColor} pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} user={currentUser} userList={[...validUsernames, "house"]} triggerRefresh={refreshView} refreshCounter={refresh}/>}
       {currentlyActive === 2 && <ChoresTab setBgColor={setBgColor} pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} user={currentUser} triggerRefresh={refreshView} refreshCounter={refresh}/>}
-      {currentlyActive === 3 && <RoommateListPage setBgColor={setBgColor} pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} houseName={houseName} setHouseName={setHouseName} user={currentUser} admins ={adminList} usernames ={validUsernames} triggerRefresh={refreshView} refreshCounter={refresh}/>}
-      {currentlyActive === 4 && <RoommateAcctPage acctBgs={acctBgs} editAcctBgs={editAcctBgs} petPeeves={petPeeves} editPeeves={editPeeves} addPage={addPage} setPageHeader={setPageHeader} setActive={setActive} signIn={signIn} user={currentUser} houseName={houseName} setPageHeader={setPageHeader} clickedUser={clickedUser} bgColor={bgColor} setBgColor={setBgColor} triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 3 && <RoommateListPage setBgColor={setBgColor} currentUser={currentUser} pageList={pageList} addPage={addPage} setClickedUser={setClickedUser} setActive={setActive} houseName={houseName} setHouseName={setHouseName} user={currentUser} admins ={adminList} usernames ={validUsernames} triggerRefresh={refreshView} refreshCounter={refresh}/>}
+      {currentlyActive === 4 && <RoommateAcctPage acctBgs={acctBgs} editAcctBgs={editAcctBgs} petPeeves={petPeeves} editPeeves={editPeeves} addPage={addPage} setPageHeader={setPageHeader} setActive={setActive} signIn={signIn} user={currentUser} houseName={houseName} clickedUser={clickedUser} bgColor={bgColor} setBgColor={setBgColor} triggerRefresh={refreshView} refreshCounter={refresh}/>}
     </div>
     </div>
     }

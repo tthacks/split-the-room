@@ -7,7 +7,7 @@ function MessageTab(props) {
 
     const [messages, setMessages] = useState([]);
     const [modalVisible, toggleVisiblity] = useState(false);
-    const debugMode = false;
+    const debugMode = true;
 
     useEffect(fetchMessages, [props.refreshCounter]);
 

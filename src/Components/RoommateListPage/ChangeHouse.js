@@ -1,5 +1,4 @@
-import React, {useState} from "react";
-import $ from 'jquery';
+import React from "react";
 import '../../Stylesheets/modal.css';
 
 function ChangeHouse(props) {
@@ -18,9 +17,6 @@ function ChangeHouse(props) {
         let newName = houseName;
         if (newName === "") {
             alert("Please include a name for your house.");
-        }
-        else {
-            alert("New house name is " + newName);
         }
         dismissModal();
     }

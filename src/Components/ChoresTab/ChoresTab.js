@@ -5,6 +5,7 @@ import CompleteChore from './CompleteChore';
 import NewChoreModal from './NewChoreModal';
 import '../../Stylesheets/chores.css';
 import * as colors from "../../colors";
+import ReactConfetti from 'react-confetti';
 
 function ChoresTab(props) {
 

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import $ from 'jquery';
 import "../../Stylesheets/chores.css";
 import * as colors from "../../colors";
+import ReactConfetti from 'react-confetti';
 
 function TodoChoreList(props) {
 
     const [displayedList, setDisplayedList] = useState([]);
     const [selectedItems, setSelectedItems] = useState([]);
+    const [confetti, releaseConfetti] = useState(false);
     useEffect(renderDisplayedList, [props.list, props.user, props.triggerRefresh]);
 
     const confettiColors = [
@@ -54,6 +56,7 @@ function TodoChoreList(props) {
                 $.post('/newcompletechore', completed, function() {
                     setSelectedItems([]);
                     props.triggerRefresh();
+                    releaseConfetti(true);
                 });
             });
         }
@@ -92,6 +95,7 @@ function TodoChoreList(props) {
         <div style={{height: "280px", width: "100%", overflowY: "scroll"}}>
         {displayedList}
         </div>
+        {confetti && <ReactConfetti colors={confettiColors} recycle={false} />}
         <div className="markCompleteDelete">
             <button id="complete-button" onClick={manageCompleted}>{"MARK COMPLETE"}</button>
             <button id="delete-button" onClick={deleteSelected}>{"DELETE CHORE"}</button>
