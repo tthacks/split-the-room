@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import RoommateAcctEntry from './RoommateAcctEntry';
 import $ from 'jquery';
 import * as colors from '../../colors';
-import AddRoommateModal from './AddRoommateModal';
 import ChangeHouse from './ChangeHouse';
 
 
@@ -13,9 +12,6 @@ function RoommateListPage(props) {
     const user = props.user;
     const [modalVisible, toggleVisiblity] = useState(false);
     const houseName = props.houseName;
-    // const [listedRoommates, addToList] = useState([]);
-
-    // useEffect(fetchRoommates, [props.refreshCounter]);
 
     const pageStyle = {
         backgroundColor: colors.light2,
@@ -55,7 +51,6 @@ function RoommateListPage(props) {
                 />
             );
         });
-        // addToList(list);
         return list;
     }
 

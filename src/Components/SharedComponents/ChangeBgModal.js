@@ -9,8 +9,6 @@ function ChangeBgModal(props) {
     const acctBgs = props.acctBgs;
     const user = props.user;
     const [newColor, setNewColor] = useState("DEFAULT");
-//     const [msg, setMsg] = useState("");
-//     const [isUrgent, setUrgent] = useState(false);
 
 
     function dismissModal(e) {
