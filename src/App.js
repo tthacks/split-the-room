@@ -67,7 +67,7 @@ function App() {
       return (
         <div>
           <h1 onClick={gotoRoommateList} style={{cursor: "pointer", color: colors.light3, display: "inline", marginTop: 0, paddingTop: 30, paddingLeft: 30, fontSize: 80}}>{houseName}</h1>
-          <h3 onClick={gotoRoommateList} style={{cursor: "pointer", color: colors.light3, display: "inline", paddingLeft: 30, fontSize: 25}}>3 members</h3>
+          <h3 onClick={gotoRoommateList} style={{cursor: "pointer", color: colors.light3, display: "inline", paddingLeft: 30, fontSize: 25}}>{validUsernames.length} members</h3>
         </div>
       );
     }
@@ -76,7 +76,7 @@ function App() {
         <div>
           <h1 onClick={goBack} style={{cursor: "pointer", color: colors.light3, float: "left", paddingTop: 30, paddingLeft: 30}}> &lt; Back</h1>
           <h1 style={{cursor: "pointer", color: colors.light3, margin: 0, paddingTop: 30, paddingRight: 30, textAlign: "right", fontSize: 70}}>{houseName}</h1>
-          <h3 style={{cursor: "pointer", color: colors.light3, paddingRight: 30, textAlign: "right", fontSize: 25}}>3 members</h3>
+          <h3 style={{cursor: "pointer", color: colors.light3, paddingRight: 30, textAlign: "right", fontSize: 25}}>{validUsernames.length} members</h3>
         </div>
       );
     }
